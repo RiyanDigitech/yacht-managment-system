@@ -200,7 +200,7 @@ const DashboardLayout = () => {
                         }`}
                       />
                     ),
-                    label: <div className="text-[#0F172A]">Dashboard</div>,
+                    label: <div className="text-textcolor">Dashboard</div>,
                   },
                   {
                     key: "/franchise-list",
@@ -212,7 +212,7 @@ const DashboardLayout = () => {
                       />
                     ),
                     label: (
-                      <div className=" text-[#0F172A]">
+                      <div className=" text-textcolor">
                         Franchise Management
                       </div>
                     ),
@@ -227,7 +227,7 @@ const DashboardLayout = () => {
                   //     />
                   //   ),
                   //   label: (
-                  //     <div className=" text-[#0F172A]">Customer Management</div>
+                  //     <div className=" text-textcolor">Customer Management</div>
                   //   ),
                   // },
                   // {
@@ -240,7 +240,7 @@ const DashboardLayout = () => {
                   //     />
                   //   ),
                   //   label: (
-                  //     <div className="text-[#0F172A]">Complaint Management</div>
+                  //     <div className="text-textcolor">Complaint Management</div>
                   //   ),
                   // },
                   // {
@@ -253,7 +253,7 @@ const DashboardLayout = () => {
                   //     />
                   //   ),
                   //   label: (
-                  //     <div className="text-[#0F172A]">Service Management</div>
+                  //     <div className="text-textcolor">Service Management</div>
                   //   ),
                   // },
                   // {
@@ -266,7 +266,7 @@ const DashboardLayout = () => {
                   //     />
                   //   ),
                   //   label: (
-                  //     <div className="text-[#0F172A]">Lead Management</div>
+                  //     <div className="text-textcolor">Lead Management</div>
                   //   ),
                   // },
 
@@ -303,7 +303,7 @@ const DashboardLayout = () => {
                         }`}
                       />
                     ),
-                    label: <div className="text-[#0F172A]">Dashboard</div>,
+                    label: <div className="text-textcolor">Dashboard</div>,
                   },
 
                   {
@@ -316,7 +316,7 @@ const DashboardLayout = () => {
                       />
                     ),
                     label: (
-                      <div className="text-[#0F172A]">Lead Management</div>
+                      <div className="text-textcolor">Lead Management</div>
                     ),
                   },
                   // {
@@ -329,7 +329,7 @@ const DashboardLayout = () => {
                   //     />
                   //   ),
                   //   label: (
-                  //     <div className="text-[#0F172A]">Complaint Management</div>
+                  //     <div className="text-textcolor">Complaint Management</div>
                   //   ),
                   // },
                   // {
@@ -351,7 +351,7 @@ const DashboardLayout = () => {
         {getSiderWidth() > 70 && currentPage === "Account Details" && (
           <>
             <div className="z-99999 ml-[239px] ">
-              <div className="text-[#0F172A] font-bold py-5 ml-4  text-2xl">
+              <div className="text-textcolor font-bold py-5 ml-4  text-2xl">
                 Setting
               </div>{" "}
               <div className="border-b-[1px] w-10/12 mx-auto ">
@@ -435,7 +435,7 @@ const DashboardLayout = () => {
               {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </button>
             <div className=" w-full flex justify-end items-center sm:justify-between">
-              <div className="font-DMSans text-[#0F172A] font-bold text-lg max-sm:hidden">
+              <div className="font-DMSans text-textcolor font-bold text-lg max-sm:hidden">
                 {currentPage === "Lead" ? "Lead List" : currentPage}
               </div>
               <div className=" w-8/12 sm:w-3/12 lg:w-80 flex items-center justify-between">
