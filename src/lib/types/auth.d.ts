@@ -1,15 +1,15 @@
 export interface LoginApiResponse {
-  message: string;
   data: {
+    success: boolean;
+    message: string;
     data: {
-      id: number;
-      name: string;
-      email: string;
-      role: string;
-      phone: string;
-      address?: string;
-      accessToken: string;
-      username?: string;
+      access_token: string;
+      user: {
+        id: number;
+        name: string;
+        email: string;
+        role: string;
+      };
     };
   };
 }

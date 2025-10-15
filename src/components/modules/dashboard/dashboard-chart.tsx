@@ -19,14 +19,14 @@ const LeadChart = () => {
     series: [
       {
         name: "Leads",
-        data: [
-          apiData?.data?.totalLeads,
-          apiData?.data?.sendQuotation,
-          apiData?.data?.paymentDone,
-          apiData?.data?.inProgress,
-          apiData?.data?.feePaid,
-          apiData?.data?.completed,
-        ],
+        // data: [
+        //   apiData?.data?.totalLeads,
+        //   apiData?.data?.sendQuotation,
+        //   apiData?.data?.paymentDone,
+        //   apiData?.data?.inProgress,
+        //   apiData?.data?.feePaid,
+        //   apiData?.data?.completed,
+        // ],
       },
     ],
     options: {

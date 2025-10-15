@@ -42,7 +42,8 @@ export default function ForGetPassword() {
   return (
     <div className="h-screen bg-[url('/auth-bg.png')] bg-cover bg-center  relative flex md:items-center justify-center font-manrope">
       <div className="font-manrope my-auto md:my-5 flex-1 md:max-w-150 bg-white bg-opacity-40 rounded-2xl pt-9 px-8 md:px-16 h-hit">
-        <h2 className="text-xl font-bold text-[#fa7537]">App Name / logo</h2>
+        {/* <h2 className="text-xl font-bold text-[#00a1b3]">App Name / logo</h2> */}
+        <img src="/smartchoice.png" alt="Smart Choice" width={250} />
         <div className="mt-5 md:mt-28">
           <h1 className="text-lg text-center md:text-2xl font-bold text-[#222834] md:mt-6 font-manrope">
             Forgot your Password?
@@ -70,7 +71,7 @@ export default function ForGetPassword() {
             />
             <button
               type="submit"
-              className="submit bg-[#ff6f2c] h-[44px] mb-6 px-6 rounded-lg text-white ml-2 flex items-center"
+              className="submit bg-[#00a1b3] h-[44px] mb-6 px-6 rounded-lg text-white ml-2 flex items-center"
             >
               {isPending ? <Spin /> : "Send"}
               <PiGreaterThanLight className="text-white ml-2" />{" "}

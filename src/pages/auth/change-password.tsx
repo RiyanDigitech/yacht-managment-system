@@ -32,7 +32,8 @@ export default function ChangePassword() {
   return (
     <div className="h-screen bg-[url('/auth-bg.png')] bg-cover bg-center  relative flex md:items-center justify-center font-manrope">
       <div className="font-manrope my-5 sm:my-auto md:my-5 flex-1 md:max-w-150 bg-white bg-opacity-40 rounded-2xl pt-9 px-8 md:px-16 h-fit pb-8">
-        <h2 className="text-xl font-bold text-[#FF6820]">App Name / logo</h2>
+        {/* <h2 className="text-xl font-bold text-[#00a1b3]">App Name / logo</h2> */}
+        <img src="/smartchoice.png" alt="Smart Choice" width={250} />
         <h1 className="text-lg md:text-2xl font-bold text-[#18120F] mt-6">
           Change Password
         </h1>
@@ -87,7 +88,7 @@ export default function ChangePassword() {
 
           <button
             type="submit"
-            className={`bg-[#ff6820] font-manrope w-11/12 sm:w-6/12 lg:w-full text-white py-2 rounded-md text-[14px] mt-6 "
+            className={`bg-[#00a1b3] font-manrope w-11/12 sm:w-6/12 lg:w-full text-white py-2 rounded-md text-[14px] mt-6 "
             }`}
           >
             {isPending ? <Spin /> : "Set Password"}
