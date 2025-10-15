@@ -17,57 +17,121 @@ const AuthService = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const useHandleLoginInService = (reset: () => void) => {
-    function handleLogInRequest(data: userType): Promise<LoginApiResponse> {
-      return axios.post(`/admin/login`, data);
-    }
-    const onSuccess = (response: LoginApiResponse) => {
-      const userObject = {
-        id: response?.data?.data?.id,
-        username: response?.data?.data?.name,
-        email: response?.data?.data?.email,
-        phone: response?.data?.data?.phone,
-        address: response?.data?.data?.address || "",
-      };
-      if (
-        response?.data?.data?.role === "Admin" ||
-        response?.data?.data?.role === "Franchise"
-      ) {
-        tokenService?.setLastUserData(userObject);
-        tokenService.setUser(response?.data?.data?.name);
-        tokenService.setTokenRetries(5);
-        tokenService.saveLocalRefreshToken("");
-        tokenService.saveLocalAccessToken(response?.data?.data?.accessToken);
-      }
-      notification.success({
-        message: "Login Successful",
-        description: "You have successfully logged in!",
-        placement: "topRight",
-      });
-      navigate("/");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      reset();
-    };
+  function handleLogInRequest(data: userType): Promise<LoginApiResponse> {
+    return axios.post(`/login`, data);
+  }
 
-    const onError = (error: errorType) => {
-      console.log(error, "error");
-      notification.error({
-        message: "Login Failed",
-        description: error?.response?.data?.message || "Login Failed",
-        placement: "topRight",
-      });
-    };
-    return useMutation({
-      mutationFn: handleLogInRequest,
-      onSuccess,
-      onError,
-      retry: 0,
+  const onSuccess = (response: LoginApiResponse) => {
+  const { access_token, user } = response?.data?.data || {};
+
+  if (!access_token || !user) return;
+
+  const role = user?.roles?.[0]?.name || "Unknown";
+
+  const userObject = {
+    id: user.id,
+    username: user.name,
+    email: user.email,
+    role,
+  };
+
+  // ✅ Save in cookies + localStorage
+  tokenService.saveLocalAccessToken(access_token);
+  tokenService.setUser(userObject);
+  tokenService.setLastUserData(userObject);
+  tokenService.setTokenRetries(5);
+
+  notification.success({
+    message: "Login Successful",
+    description: response?.data?.message || "You have successfully logged in!",
+    placement: "topRight",
+  });
+
+  // ✅ Role-based redirect
+  if (role === "Owner") {
+    navigate("/dashboard");
+  } else {
+    navigate("/lead");
+  }
+
+  queryClient.invalidateQueries({ queryKey: ["user"] });
+  reset();
+};
+
+
+  const onError = (error: errorType) => {
+    console.log(error, "error");
+    notification.error({
+      message: "Login Failed",
+      description: error?.response?.data?.message || "Invalid credentials",
+      placement: "topRight",
     });
   };
+
+  return useMutation({
+    mutationFn: handleLogInRequest,
+    onSuccess,
+    onError,
+    retry: 0,
+  });
+};
+
+// const useHandleLoginInService = (reset: () => void) => {
+//   function handleLogInRequest(data: userType): Promise<LoginApiResponse> {
+//     return axios.post(`/login`, data);
+//   }
+
+//   const onSuccess = (response: LoginApiResponse) => {
+//     const user = response?.data?.data?.user;
+//     const accessToken = response?.data?.data?.access_token;
+
+//     const userObject = {
+//       id: user?.id,
+//       username: user?.name,
+//       email: user?.email,
+//       role: user?.role,
+//     };
+
+//     if (user?.role === "Owner" || user?.role === "Salesman") {
+//       tokenService.setLastUserData(userObject);
+//       tokenService.setUser(user?.name);
+//       tokenService.setTokenRetries(5);
+//       tokenService.saveLocalAccessToken(accessToken);
+//     }
+
+//     notification.success({
+//       message: "Login Successful",
+//       description: response?.data?.message || "You have successfully logged in!",
+//       placement: "topRight",
+//     });
+
+//     navigate("/"); // redirect to home
+//     queryClient.invalidateQueries({ queryKey: ["user"] });
+//     reset();
+//   };
+
+//   const onError = (error: errorType) => {
+//     console.log(error, "error");
+//     notification.error({
+//       message: "Login Failed",
+//       description: error?.response?.data?.message || "Invalid credentials",
+//       placement: "topRight",
+//     });
+//   };
+
+//   return useMutation({
+//     mutationFn: handleLogInRequest,
+//     onSuccess,
+//     onError,
+//     retry: 0,
+//   });
+// };  
+
   const useHandleForGotPassword = (reset: () => void) => {
     function handleForgotRequest(
       data: ForgotEmailType
     ): Promise<ForgotEmailResponse> {
-      return axios.post(`/admin/forgot-password`, data);
+      return axios.post(`/forgot-password`, data);
     }
     const onSuccess = (response: ForgotEmailResponse) => {
       console.log(response);
@@ -102,7 +166,7 @@ const AuthService = () => {
     function handleChangeRequest(
       data: ChangePasswordType
     ): Promise<ForgotEmailResponse> {
-      return axios.post(`/admin/change-password`, data);
+      return axios.post(`/change-password`, data);
     }
     const onSuccess = (response: ForgotEmailResponse) => {
       console.log(response);
@@ -114,7 +178,7 @@ const AuthService = () => {
       });
       tokenService.clearStorage();
 
-      navigate("/admin/login");
+      navigate("/login");
       queryClient.invalidateQueries({ queryKey: ["user"] });
       reset();
     };
@@ -134,41 +198,54 @@ const AuthService = () => {
       retry: 0,
     });
   };
-  const useHandleResetPassword = (reset: () => void, safeToken: string) => {
-    function handleresetRequest(
-      data: ChangePasswordType
-    ): Promise<ForgotEmailResponse> {
-      return axios.post(`/admin/reset-password/${safeToken}`, data);
-    }
-    const onSuccess = (response: ForgotEmailResponse) => {
-      console.log(response);
+ const useHandleResetPassword = (
+  reset: () => void,
+  safeToken: string,
+  safeEmail: string
+) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-      notification.success({
-        message: "request Successful",
-        description: "password changed successfully",
-        placement: "topRight",
-      });
+  const handleResetRequest = (data: ChangePasswordType) => {
+    const payload = {
+      email: safeEmail, // ✅ use the URL email directly
+      token: safeToken,
+      password: data.newPassword,
+      password_confirmation: data.confirmPassword,
+    };
 
-      navigate("/admin/login");
-      queryClient.invalidateQueries({ queryKey: ["user", safeToken] });
-      reset();
-    };
-    const onError = (error: errorType) => {
-      console.log(error);
-      notification.error({
-        message: "Failed",
-        description:
-          error?.response?.data?.message || "Failed to update the password",
-        placement: "topRight",
-      });
-    };
-    return useMutation({
-      mutationFn: handleresetRequest,
-      onError,
-      onSuccess,
-      retry: 0,
+    console.log("Reset password payload:", payload); // ✅ verify email before API
+    return axios.post("/reset-password", payload);
+  };
+
+  const onSuccess = () => {
+    notification.success({
+      message: "Success",
+      description: "Password has been reset successfully!",
+      placement: "topRight",
+    });
+    reset();
+    navigate("/admin/login");
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+  };
+
+  const onError = (error: errorType) => {
+    notification.error({
+      message: "Failed",
+      description:
+        error?.response?.data?.message || "Failed to reset password",
+      placement: "topRight",
     });
   };
+
+  return useMutation({
+    mutationFn: handleResetRequest,
+    onSuccess,
+    onError,
+    retry: 0,
+  });
+};
+
   const useHandleUpdateProfile = () => {
     function handleLogInRequest(data: UserInfo): Promise<LoginApiResponse> {
       return axios.put(`/admin/update`, data);
@@ -208,7 +285,7 @@ const AuthService = () => {
   };
   const useFetchTargetedAdmin = () => {
     async function fetchTeam(): Promise<ApiResponseAccountDetails> {
-      const url = buildUrlWithParams(`/admin`, {});
+      const url = buildUrlWithParams(`/`, {});
       return axios.get(url).then((res) => res.data);
     }
 

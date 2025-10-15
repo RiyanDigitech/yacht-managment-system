@@ -13,13 +13,13 @@ const { Header, Sider, Content } = Layout;
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
 
-// const person = tokenService.getUser();
+const person = tokenService.getUser();
 const DashboardLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState("");
 
   const [see, setSee] = useState(true);
-  // const [lastPersonData, setLastPersonData] = useState("");
+  const [lastPersonData, setLastPersonData] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const {
@@ -38,10 +38,10 @@ const DashboardLayout = () => {
           navigate("/login");
         }
       } catch (error) {
-        navigate("/login");
+        navigate("/admin/login");
       }
     } else {
-      navigate("/login");
+      navigate("/admin/login");
     }
     const pathSegments = pathname.split("/").filter(Boolean);
     if (pathSegments.length > 0) {
@@ -181,8 +181,8 @@ const DashboardLayout = () => {
               />
             </div>
           )}
-          {tokenService?.getUserRoleFromCookie() === "Admin" ? (
-            <>
+          {tokenService?.getUserRoleFromCookie() === "Owner" ? (
+             <>
               {" "}
               <Menu
                 className=" mb-[80px] ant-dashboard-layout"
@@ -215,6 +215,19 @@ const DashboardLayout = () => {
                       <div className=" text-textcolor">
                         Franchise Management
                       </div>
+                    ),
+                  },
+                  {
+                    key: "/yacht",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Yacht</div>
                     ),
                   },
                   // {
@@ -283,8 +296,8 @@ const DashboardLayout = () => {
                   // },
                 ]}
               />
-            </>
-          ) : (
+            </> 
+            ) : ( 
             <>
               {" "}
               <Menu
@@ -319,6 +332,7 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Lead Management</div>
                     ),
                   },
+                  
                   // {
                   //   key: "/complaint-list",
                   //   icon: (
@@ -346,7 +360,7 @@ const DashboardLayout = () => {
                 ]}
               />
             </>
-          )}
+           )} 
         </Sider>
         {getSiderWidth() > 70 && currentPage === "Account Details" && (
           <>

@@ -9,11 +9,10 @@ import { UserType } from "@/lib/types/user";
 import { jwtDecode } from "jwt-decode";
 import { userDataType } from "@/lib/types/auth";
 class TokenService {
-  getLocalAccessToken = () => {
-    return Cookies.get(cookieAuth);
-  };
+   getLocalAccessToken = () => Cookies.get(cookieAuth);
+
   saveLocalAccessToken = (token: string) => {
-    Cookies.set(cookieAuth, token, { sameSite: "strict" });
+    Cookies.set(cookieAuth, token, { sameSite: "strict", expires: 1 }); // 1 day expiry
   };
   getLocalRefreshToken = () => {
     return Cookies.get(cookieRefresh);
@@ -21,10 +20,11 @@ class TokenService {
   saveLocalRefreshToken = (token: string) => {
     Cookies.set(cookieRefresh, token);
   };
-  getUser = (): null | string => {
-    return JSON.parse(localStorage.getItem(cookieData)!);
+  getUser = () => {
+    const data = localStorage.getItem(cookieData);
+    return data ? JSON.parse(data) : null;
   };
-  setUser = (user: string) => {
+  setUser = (user: any) => {
     localStorage.setItem(cookieData, JSON.stringify(user));
   };
   updateUser = <T extends keyof UserType>(key: T, value: UserType[T]) => {
@@ -36,49 +36,43 @@ class TokenService {
       throw new Error("Error");
     }
   };
-  setTokenRetries = (retries: number) => {
-    localStorage.setItem(tokenRetries, retries.toString());
-  };
-  getTokenRetries = () => {
-    return parseInt(localStorage.getItem(tokenRetries)!);
-  };
-  getUserRoleFromCookie = (): string | null => {
-    // Cookie se 'session-admin' token ko retrieve kare
+  getUserRoleFromCookie = () => {
     const token = Cookies.get(cookieAuth);
-
-    if (!token) {
-      console.error("Token not found in cookies.");
-      return null;
-    }
+    if (!token) return null;
 
     try {
-      // Token ko decode kare aur role extract kare
-      const decodedToken = jwtDecode<{ role: string }>(token);
-      return decodedToken.role || "Role not found";
-    } catch (error: unknown) {
-      // Catch block handle karte hain
-      if (error instanceof Error) {
-        console.error("Invalid token:", error.message);
-      } else {
-        console.error("An unknown error occurred.");
-      }
+      const decoded: any = jwtDecode(token);
+      return decoded?.role || null;
+    } catch (err) {
+      console.error("Invalid token:", err);
       return null;
     }
   };
+
   setLastUserData = (userObject: userDataType) => {
     localStorage.setItem("lastPersonData", JSON.stringify(userObject));
   };
+
   getLastUserData = () => {
-    const storedUser = localStorage.getItem("lastPersonData");
-    if (storedUser) {
-      return JSON.parse(storedUser);
-    }
-    return null;
+    const stored = localStorage.getItem("lastPersonData");
+    return stored ? JSON.parse(stored) : null;
   };
+
+  setTokenRetries = (retries: number) => {
+    localStorage.setItem(tokenRetries, retries.toString());
+  };
+
+  getTokenRetries = () => {
+    const val = localStorage.getItem(tokenRetries);
+    return val ? parseInt(val) : 0;
+  };
+
   clearStorage = () => {
-    localStorage.clear();
+    localStorage.removeItem(cookieData);
+    localStorage.removeItem("lastPersonData");
+    localStorage.removeItem(tokenRetries);
     Cookies.remove(cookieAuth);
-    Cookies.remove(cookieData);
+    Cookies.remove(cookieRefresh);
   };
 }
 export default new TokenService();

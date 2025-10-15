@@ -68,13 +68,13 @@ export default function LoginPage() {
     console.log("Captcha token:", token);
   };
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (!captchaToken) {
-      notification.error({
-        message: "CAPTCHA Required",
-        description: "Please complete the CAPTCHA to proceed.",
-      });
-      return;
-    }
+    // if (!captchaToken) {
+    //   notification.error({
+    //     message: "CAPTCHA Required",
+    //     description: "Please complete the CAPTCHA to proceed.",
+    //   });
+    //   return;
+    // }
     const payload = {
       ...data,
       rememberMe: isRememberMeChecked,
@@ -87,7 +87,8 @@ export default function LoginPage() {
   return (
     <div className="h-screen  md:w-[100vw]  bg-[url('/auth-bg.png')] bg-cover bg-center  relative flex md:items-center justify-center font-manrope">
       <div className="h-fit w-10/12 p-4 font-manrope my-auto md:my-5 flex-1 md:max-w-[50%] bg-white bg-opacity-50 rounded-2xl pt-9 md:px-12 md:h-fit xmd:h-fit lg:h-fit pb-6 md:pb-9 lg:pb-8">
-        <h2 className="text-xl font-bold text-[#FF6820]">App Name / logo</h2>
+        {/* <h2 className="text-xl font-bold text-[#00a1b3]">App Name / logo</h2> */}
+        <img src="/smartchoice.png" alt="Smart Choice" width={250} />
         <h1 className="text-lg md:text-2xl font-bold text-[#18120F] my-6">
           ADMIN LOGIN
         </h1>
@@ -172,16 +173,16 @@ export default function LoginPage() {
           </div>
           <div className="my-5 md:w-[120px]">
             {" "}
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
               onChange={handleCaptchaChange}
-            />
+            /> */}
           </div>
           <button
             disabled={isButtonDisabled} // Button disabled logic
             type="submit"
             className={`w-11/12 sm:w-6/12 lg:w-full  mx-auto text-white py-2 rounded-md text-[14px] font-semibold ${
-              !isButtonDisabled ? "bg-[#ff6820]" : "bg-[#f0763e]"
+              !isButtonDisabled ? "bg-[#00a1b3]" : "bg-[#00a1b0]"
             }`}
           >
             {isPending ? <Spin /> : "Login"}
