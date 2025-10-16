@@ -14,6 +14,7 @@ import FranchiseLeadList from "@/pages/lead-management/targeted-franchise-lead-l
 import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
 import DashboardPage from "@/pages/dashboard";
 import Yatch from "@/pages/yatch/Yatch";
+import YachtDetail from "@/components/modules/yatch/YachtDetail";
 // import AddressAutocomplete from "@/pages/location";
 
 const router = createBrowserRouter([
@@ -83,6 +84,7 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yacht", element: <Yatch /> },
+          { path: "/yatch/:id", element: <YachtDetail /> },
         ],
       },
     ],
