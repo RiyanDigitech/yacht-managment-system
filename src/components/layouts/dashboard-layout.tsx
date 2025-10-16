@@ -124,7 +124,7 @@ const DashboardLayout = () => {
       label: (
         <div className="">
           <button
-            // onClick={logout}
+            onClick={() => logoutMutation.mutate()}
             className="mx-auto flex justify-center font-manrope text-xs  font-semibold"
           >
             LogOut
@@ -133,7 +133,8 @@ const DashboardLayout = () => {
       ),
     },
   ];
-  const { useFetchTargetedAdmin } = AuthService();
+  const { useFetchTargetedAdmin, useHandleLogout } = AuthService();
+  const logoutMutation = useHandleLogout();
 
   const { data } = useFetchTargetedAdmin();
 
