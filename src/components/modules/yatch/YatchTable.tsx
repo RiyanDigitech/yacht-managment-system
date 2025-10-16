@@ -7,12 +7,12 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import YatchService from "@/services/yatch-service/YatchService";
+import { useNavigate } from "react-router";
 
 
 
 function YatchTable() {
-  const [open, setOpen] = useState(false);
-  const [editingExpense, setEditingExpense] = useState<any | null>(null);
+ const navigate = useNavigate(); 
   // pagination state
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -43,9 +43,6 @@ const handleDelete = (id: number, callbacks?: any) => {
     }
   );
 };
-
-//   import { Dropdown, Menu, Modal } from "antd";
-// import { EditOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons";
 
 const columns = [
   {
@@ -122,15 +119,15 @@ const columns = [
     key: "washrooms",
   },
   {
-    title: "Facilities",
-    dataIndex: "facilities",
-    key: "facilities",
+    title: "Per Hour Rate",
+    dataIndex: "per_hour_rate",
+    key: "per_hour_rate",
     render: (value: any) => value || <span className="text-gray-400">—</span>,
   },
   {
-    title: "Additional Fields",
-    dataIndex: "additional_fields",
-    key: "additional_fields",
+    title: "Currency",
+    dataIndex: "currency",
+    key: "currency",
     render: (value: any) => value || <span className="text-gray-400">—</span>,
   },
   {
@@ -143,10 +140,7 @@ const columns = [
             <Menu.Item
               key="edit"
               icon={<EditOutlined />}
-              onClick={() => {
-                setEditingExpense(record);
-                setOpen(true);
-              }}
+              onClick={() => navigate(`/yatch/${record.id}`)} 
             >
               Edit
             </Menu.Item>
@@ -192,9 +186,7 @@ const columns = [
   );
 
   return (
-    <div className="p-4   rounded-[10px]">
-
-
+    <div className=" rounded-[10px]">
       {/* Table */}
       <Spin
         spinning={isLoading}
