@@ -21,7 +21,7 @@ function AddonsTable() {
 
   const { useGetAddons,useDeleteAddons } = AddonsService();
   const { data:addons, isLoading } = useGetAddons( page, pageSize);
-  console.log("addons", addons);
+  //console.log("addons", addons);
   const deleteAddons = useDeleteAddons();
 
   const handleDelete = (id: number, callbacks?: any) => {

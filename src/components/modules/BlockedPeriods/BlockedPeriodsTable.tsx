@@ -27,7 +27,7 @@ function BlockPeriodsTable() {
 
   const { useGetBlockedPeriods,useDeleteBlockedPeriods} = BlockedPeriodsService();
   const { data:blockperiod, isLoading } = useGetBlockedPeriods( page, pageSize);
-  console.log("blockperiods", blockperiod);
+  //console.log("blockperiods", blockperiod);
   const deleteblockperiods = useDeleteBlockedPeriods();
 
   const handleDelete = (id: number, callbacks?: any) => {
