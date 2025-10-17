@@ -161,7 +161,7 @@ const DashboardLayout = () => {
             <div className="w-full flex justify-center items-center opacity-100 h-17 ">
               <img
                 className=""
-                src={"/Logo-Container.png"}
+                src={"/smartchoice.png"}
                 alt="logo"
                 // width={180}
                 height={10}
@@ -177,7 +177,7 @@ const DashboardLayout = () => {
             <div className="w-full flex justify-center items-center bg-[#d4d4d4]">
               <img
                 className="py-5 h-19 w-15 object-contain"
-                src={"/service.png"}
+                src={"/smartchoice.png"}
                 alt="logo"
               />
             </div>
@@ -271,7 +271,7 @@ const DashboardLayout = () => {
                     ),
                   },
                   {
-                    key: "/invoicesBooking the jacket. Great Indian Model concentration. I. Hello. Thank you. David Kolschenko can't include the contest in",
+                    key: "/invoices",
                     icon: (
                       <MdReceipt
                         className={`${
@@ -283,70 +283,6 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Invoices</div>
                     ),
                   },
-                  // {
-                  //   key: "/customer-list",
-                  //   icon: (
-                  //     <RiCustomerService2Fill
-                  //       className={`${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: (
-                  //     <div className=" text-textcolor">Customer Management</div>
-                  //   ),
-                  // },
-                  // {
-                  //   key: "/complaint",
-                  //   icon: (
-                  //     <MdInventory2
-                  //       className={`${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: (
-                  //     <div className="text-textcolor">Complaint Management</div>
-                  //   ),
-                  // },
-                  // {
-                  //   key: "/service-list",
-                  //   icon: (
-                  //     <MdTask
-                  //       className={`${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: (
-                  //     <div className="text-textcolor">Service Management</div>
-                  //   ),
-                  // },
-                  // {
-                  //   key: "/lead-list",
-                  //   icon: (
-                  //     <MdReceipt
-                  //       className={`${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: (
-                  //     <div className="text-textcolor">Lead Management</div>
-                  //   ),
-                  // },
-
-                  // {
-                  //   key: "/account-details",
-                  //   icon: (
-                  //     <MdDashboard
-                  //       className={` ${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: <div className="">Settings</div>,
-                  // },
                 ]}
               />
             </> 
@@ -385,32 +321,34 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Lead Management</div>
                     ),
                   },
+                  {
+                    key: "/bookings",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Bookings</div>
+                    ),
+                  },
+                  {
+                    key: "/invoices",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Invoices</div>
+                    ),
+                  },
                   
-                  
-                  // {
-                  //   key: "/complaint-list",
-                  //   icon: (
-                  //     <MdInventory2
-                  //       className={`${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: (
-                  //     <div className="text-textcolor">Complaint Management</div>
-                  //   ),
-                  // },
-                  // {
-                  //   key: "/account-details",
-                  //   icon: (
-                  //     <MdDashboard
-                  //       className={` ${
-                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                  //       }`}
-                  //     />
-                  //   ),
-                  //   label: <div className="">Settings</div>,
-                  // },
+
                 ]}
               />
             </>
