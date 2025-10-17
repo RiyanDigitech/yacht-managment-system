@@ -40,12 +40,12 @@ const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
       console.log(`${key}:`, value);
     }
 
-    console.log("addons values", {
-      name,
-      description,
-      price,
+    // console.log("addons values", {
+    //   name,
+    //   description,
+    //   price,
      
-    });
+    // });
 
     mutation.mutate(
       { data: formData },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MdDashboard } from "react-icons/md";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined } from "@ant-design/icons";
 import { MdShoppingBag } from "react-icons/md";
 import { MdReceipt } from "react-icons/md";
 
@@ -234,7 +234,7 @@ const DashboardLayout = () => {
                   {
                     key: "/addons",
                     icon: (
-                      <MdReceipt
+                      <UserAddOutlined
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
@@ -247,7 +247,7 @@ const DashboardLayout = () => {
                   {
                     key: "/blockedperiods",
                     icon: (
-                      <MdReceipt
+                      <CloseCircleOutlined 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
