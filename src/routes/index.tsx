@@ -17,7 +17,9 @@ import Yatch from "@/pages/yatch/Yatch";
 import Invoice from "@/pages/invoice/Invoice";
 import Booking from "@/pages/booking/Booking";
 import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
-// import AddressAutocomplete from "@/pages/location";
+import YachtDetail from "@/components/modules/yatch/YachtDetail";
+import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
+import AddonsTable from "@/components/modules/Addons/AddonsTable";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,12 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yacht", element: <Yatch /> },
+
+          { path: "/addons", element: <AddonsTable /> },
+          { path: "/blockedperiods", element: <BlockPeriodsTable /> },
+
+          { path: "/yatch/:id", element: <YachtDetail /> },
+
         ],
       },
     ],

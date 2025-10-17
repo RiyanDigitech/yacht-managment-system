@@ -125,7 +125,7 @@ const DashboardLayout = () => {
       label: (
         <div className="">
           <button
-            // onClick={logout}
+            onClick={() => logoutMutation.mutate()}
             className="mx-auto flex justify-center font-manrope text-xs  font-semibold"
           >
             LogOut
@@ -134,7 +134,8 @@ const DashboardLayout = () => {
       ),
     },
   ];
-  const { useFetchTargetedAdmin } = AuthService();
+  const { useFetchTargetedAdmin, useHandleLogout } = AuthService();
+  const logoutMutation = useHandleLogout();
 
   const { data } = useFetchTargetedAdmin();
 
@@ -229,32 +230,6 @@ const DashboardLayout = () => {
                     ),
                     label: (
                       <div className="text-textcolor">Yacht</div>
-                    ),
-                  },
-                  {
-                    key: "/invoices",
-                    icon: (
-                      <MdReceipt
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className="text-textcolor">Invoices</div>
-                    ),
-                  },
-                  {
-                    key: "/bookings",
-                    icon: (
-                      <FaBookmark 
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className="text-textcolor">Bookings</div>
                     ),
                   },
                   // {
