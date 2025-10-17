@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { MdDashboard } from "react-icons/md";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined } from "@ant-design/icons";
 import { MdShoppingBag } from "react-icons/md";
 import { MdReceipt } from "react-icons/md";
-import { FaBookmark } from "react-icons/fa6";
 
 import { Input, Layout, Menu, theme, Dropdown, MenuProps } from "antd";
 import {  Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -233,46 +232,55 @@ const DashboardLayout = () => {
                     ),
                   },
                   {
-
-                    key: "/invoices",
-
                     key: "/addons",
                     icon: (
-                      <MdReceipt
+                      <UserAddOutlined
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
                       />
                     ),
                     label: (
-
-                      <div className="text-textcolor">Invoices</div>
-                    ),
-                  },
-                  {
-                    key: "/bookings",
-                    icon: (
-                      <FaBookmark 
-
                       <div className="text-textcolor">Addons</div>
                     ),
                   },
                   {
                     key: "/blockedperiods",
                     icon: (
-                      <MdReceipt
-
+                      <CloseCircleOutlined 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
                       />
                     ),
                     label: (
-
-                      <div className="text-textcolor">Bookings</div>
-
                       <div className="text-textcolor">BlockedPeriods</div>
-
+                    ),
+                  },
+                  {
+                    key: "/bookings",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Bookings</div>
+                    ),
+                  },
+                  {
+                    key: "/invoicesBooking the jacket. Great Indian Model concentration. I. Hello. Thank you. David Kolschenko can't include the contest in",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Invoices</div>
                     ),
                   },
                   // {
@@ -377,6 +385,7 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Lead Management</div>
                     ),
                   },
+                  
                   
                   // {
                   //   key: "/complaint-list",

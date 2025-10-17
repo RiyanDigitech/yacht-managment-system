@@ -14,15 +14,7 @@ import FranchiseLeadList from "@/pages/lead-management/targeted-franchise-lead-l
 import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
 import DashboardPage from "@/pages/dashboard";
 import Yatch from "@/pages/yatch/Yatch";
-import Invoice from "@/pages/invoice/Invoice";
-import Booking from "@/pages/booking/Booking";
-import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
 
-
-import AddonsTable from "@/components/modules/Addons/AddonsTable";
-import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
-
-import YachtDetail from "@/components/modules/yatch/YachtDetail";
 
 // import AddressAutocomplete from "@/pages/location";
 import Invoice from "@/pages/invoice/Invoice";
