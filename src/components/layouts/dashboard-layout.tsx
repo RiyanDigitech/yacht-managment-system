@@ -232,6 +232,49 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Yacht</div>
                     ),
                   },
+                  {
+
+                    key: "/invoices",
+
+                    key: "/addons",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+
+                      <div className="text-textcolor">Invoices</div>
+                    ),
+                  },
+                  {
+                    key: "/bookings",
+                    icon: (
+                      <FaBookmark 
+
+                      <div className="text-textcolor">Addons</div>
+                    ),
+                  },
+                  {
+                    key: "/blockedperiods",
+                    icon: (
+                      <MdReceipt
+
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+
+                      <div className="text-textcolor">Bookings</div>
+
+                      <div className="text-textcolor">BlockedPeriods</div>
+
+                    ),
+                  },
                   // {
                   //   key: "/customer-list",
                   //   icon: (
