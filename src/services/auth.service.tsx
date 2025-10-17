@@ -18,7 +18,7 @@ const AuthService = () => {
   const queryClient = useQueryClient();
   const useHandleLoginInService = (reset: () => void) => {
   function handleLogInRequest(data: userType): Promise<LoginApiResponse> {
-    return axios.post(`/login`, data);
+    return axios.post(`/public/login`, data);
   }
 
   const onSuccess = (response: LoginApiResponse) => {
@@ -51,7 +51,7 @@ const AuthService = () => {
   if (role === "Owner") {
     navigate("/dashboard");
   } else {
-    navigate("/lead");
+    navigate("/dashboard");
   }
 
   queryClient.invalidateQueries({ queryKey: ["user"] });
@@ -296,6 +296,47 @@ const AuthService = () => {
       refetchOnWindowFocus: false,
     });
   };
+
+  //logout
+  const useHandleLogout = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  async function handleLogoutRequest() {
+    return axios.post(`/logout`);
+  }
+
+  const onSuccess = () => {
+    // ✅ Clear tokens + user data
+    tokenService.clearStorage();
+    queryClient.clear();
+
+    notification.success({
+      message: "Logout Successful",
+      description: "You have been logged out successfully.",
+      placement: "topRight",
+    });
+
+    navigate("/admin/login");
+  };
+
+  const onError = (error: errorType) => {
+    notification.error({
+      message: "Logout Failed",
+      description:
+        error?.response?.data?.message || "Failed to logout. Please try again.",
+      placement: "topRight",
+    });
+  };
+
+  return useMutation({
+    mutationFn: handleLogoutRequest,
+    onSuccess,
+    onError,
+    retry: 0,
+  });
+};
+
   return {
     useHandleLoginInService,
     useHandleForGotPassword,
@@ -303,6 +344,7 @@ const AuthService = () => {
     useHandleUpdateProfile,
     useHandleResetPassword,
     useFetchTargetedAdmin,
+    useHandleLogout
   };
 };
 

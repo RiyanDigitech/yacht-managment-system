@@ -89,7 +89,7 @@ export default function LoginPage() {
       <div className="h-fit w-10/12 p-4 font-manrope my-auto md:my-5 flex-1 md:max-w-[50%] bg-white bg-opacity-50 rounded-2xl pt-9 md:px-12 md:h-fit xmd:h-fit lg:h-fit pb-6 md:pb-9 lg:pb-8">
         {/* <h2 className="text-xl font-bold text-[#00a1b3]">App Name / logo</h2> */}
         <img src="/smartchoice.png" alt="Smart Choice" width={250} />
-        <h1 className="text-lg md:text-2xl font-bold text-[#18120F] my-6">
+        <h1 className="text-lg md:text-2xl font-bold text-[#18120F] my-6">                                                  
           ADMIN LOGIN
         </h1>
         <form
@@ -100,11 +100,11 @@ export default function LoginPage() {
             name="email"
             control={control}
             render={({ field }) => (
-              <Form.Item
-                className="w-full sm:w-full mb-4"
+              <Form.Item                                              
+                className="w-full sm:w-full mb-4"                   
                 validateStatus={errors?.email ? "error" : ""}
-                help={errors?.email?.message}
-              >
+                help={errors?.email?.message}                                 
+              > 
                 <label
                   htmlFor="email"
                   className="text-[14px] max-md:block text-[#6B6B6B] font-manrope font-semibold leading-[1.125rem]"

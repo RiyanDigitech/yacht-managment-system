@@ -22,6 +22,16 @@ const YatchService = () => {
     refetchOnWindowFocus: false,
   });
 };
+     const useGetYachtDetail = (id: string | number) => {
+    return useQuery({
+      queryKey: ["yatch", id],
+      queryFn: async () => {
+        const { data } = await axios.get(`/yachts/${id}`);
+        return data?.data;
+      },
+      enabled: !!id,
+    });
+  };
  
   // Create Yatch
 const useCreateYatch = () => {
@@ -40,17 +50,15 @@ const useCreateYatch = () => {
 };
 // update Yatch
 const useUpdateYatch = () => {
-    const queryClient = useQueryClient();
-
+  const queryClient = useQueryClient();
     return useMutation({
-      mutationFn: async ({ id, data }: { id: string | number; data: any }) => {
-        return axios
-          .put(`/Yatch/${id}`, data)
-          .then((res) => res.data);
+      mutationFn: async ({ id, data }: { id: number; data: FormData }) => {
+        const res = await axios.post(`/yachts/${id}?_method=PUT`, data);
+        return res.data;
       },
-
-      onSuccess: (_data) => {
-        queryClient.invalidateQueries({ queryKey: ["Yatch"] });
+      onSuccess: () => {
+        // queryClient.invalidateQueries({ queryKey: ["yatchDetail"] });
+        queryClient.invalidateQueries({ queryKey: ["yatch"] });
       },
     });
   };
@@ -72,11 +80,31 @@ const useUpdateYatch = () => {
     },
   });
 };
+
+//delete yacht image
+const useDeleteYatchImage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, image_path }: { id: number; image_path: string }) => {
+      return axios.delete(`/yachts/${id}/images`, {
+        data: { image_path }, 
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["yatch"] });
+    },
+  });
+};
+
+
   return {
     useGetYatch,
     useDeleteYatch,
     useCreateYatch,
     useUpdateYatch,
+    useGetYachtDetail,
+    useDeleteYatchImage
   }
 }
 
