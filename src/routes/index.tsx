@@ -25,7 +25,7 @@ const router = createBrowserRouter([
 },
 
   {
-    element: <ProtectedRoute roleAllowed={["Owner", "Salesman"]} />,
+    element: <ProtectedRoute roleAllowed={["Owner", "Sales Person"]} />,
     children: [
       {
         path: "/admin/login",
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
 
   // Admin-only routes
   {
-    element: <ProtectedRoute roleAllowed={["Salesman"]} />,
+    element: <ProtectedRoute roleAllowed={["Sales Person"]} />,
     children: [
       {
         element: <DashboardLayout />,
