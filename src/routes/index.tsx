@@ -15,6 +15,7 @@ import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
 import DashboardPage from "@/pages/dashboard";
 import Yatch from "@/pages/yatch/Yatch";
 import YachtDetail from "@/components/modules/yatch/YachtDetail";
+import Facilities from "@/pages/facilities/facilities";
 // import AddressAutocomplete from "@/pages/location";
 
 const router = createBrowserRouter([
@@ -51,6 +52,8 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yatch", element: <Yatch /> },
+          { path: "/facilities", element: <Facilities /> },
+          
 
         ],
       },
