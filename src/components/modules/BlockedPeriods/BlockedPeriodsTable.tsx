@@ -104,7 +104,7 @@ const columns = [
       title: "Created At",
       dataIndex: "created_at",
       key: "created_at",
-      render: (text: any) =>
+      render: (text: string) =>
         new Date(text).toLocaleString("en-GB", {
           day: "2-digit",
           month: "short",

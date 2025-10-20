@@ -15,8 +15,15 @@ import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
 import DashboardPage from "@/pages/dashboard";
 import Yatch from "@/pages/yatch/Yatch";
 import YachtDetail from "@/components/modules/yatch/YachtDetail";
+
+import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
+import AddonsTable from "@/components/modules/Addons/AddonsTable";
+import IncentiveLevelTable from "@/components/modules/Incentive-level/IncentivelevelTable";
+import UserTable from "@/components/modules/users/UserTable";
+
 import Facilities from "@/pages/facilities/facilities";
 // import AddressAutocomplete from "@/pages/location";
+
 
 const router = createBrowserRouter([
   {
@@ -87,6 +94,14 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yacht", element: <Yatch /> },
+
+
+          { path: "/addons", element: <AddonsTable /> },
+          { path: "/blockedperiods", element: <BlockPeriodsTable /> },
+          { path: "/incentivelevels", element: <IncentiveLevelTable /> },
+          { path: "/users", element: <UserTable /> },
+
+
           { path: "/yatch/:id", element: <YachtDetail /> },
         ],
       },

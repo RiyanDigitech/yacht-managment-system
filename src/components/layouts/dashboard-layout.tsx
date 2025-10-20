@@ -282,7 +282,11 @@ const DashboardLayout = () => {
                     ),
                   },
                   {
+
+                    key: "/incentivelevels",
+
                     key: "/facilities",
+
                     icon: (
                       <MdReceipt
                         className={`${
@@ -291,11 +295,30 @@ const DashboardLayout = () => {
                       />
                     ),
                     label: (
+
+                      <div className="text-textcolor">Incentive Levels</div>
+                    ),
+                  },
+                  {
+                    key: "/users",
+                    icon: (
+                      <UserOutlined
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Users</div>
+                    ),
+                  },
+
                       <div className="text-textcolor">Facilities</div>
                     ),
                   },
                   
                 
+
                 ]}
               />
             </> 
