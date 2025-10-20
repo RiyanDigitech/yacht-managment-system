@@ -166,3 +166,14 @@ ul.ant-menu-vertical > li.ant-menu-item-only-child {
 .ql-snow .ql-tooltip {
   left: 0px !important;
 }
+
+.ant-picker-ok button {
+  background-color: #16a34a !important; /* Tailwind green-600 */
+  border-color: #16a34a !important;
+  color: white !important;
+}
+
+.ant-picker-ok button:hover {
+  background-color: #15803d !important; /* Darker green on hover */
+  border-color: #15803d !important;
+}

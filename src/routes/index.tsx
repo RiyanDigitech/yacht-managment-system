@@ -14,17 +14,16 @@ import FranchiseLeadList from "@/pages/lead-management/targeted-franchise-lead-l
 import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
 import DashboardPage from "@/pages/dashboard";
 import Yatch from "@/pages/yatch/Yatch";
-
-
-// import AddressAutocomplete from "@/pages/location";
-import Invoice from "@/pages/invoice/Invoice";
-import Booking from "@/pages/booking/Booking";
-import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
 import YachtDetail from "@/components/modules/yatch/YachtDetail";
+
 import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
 import AddonsTable from "@/components/modules/Addons/AddonsTable";
 import IncentiveLevelTable from "@/components/modules/Incentive-level/IncentivelevelTable";
 import UserTable from "@/components/modules/users/UserTable";
+
+import Facilities from "@/pages/facilities/facilities";
+// import AddressAutocomplete from "@/pages/location";
+
 
 const router = createBrowserRouter([
   {
@@ -34,7 +33,7 @@ const router = createBrowserRouter([
 },
 
   {
-    element: <ProtectedRoute roleAllowed={["Owner", "Sales Person"]} />,
+    element: <ProtectedRoute roleAllowed={["Owner", "Salesman"]} />,
     children: [
       {
         path: "/admin/login",
@@ -60,9 +59,8 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yatch", element: <Yatch /> },
-          { path: "/invoices", element: <Invoice /> },
-          { path: "/bookings", element: <Booking /> },
-          { path: "/view-booking/:id", element: <DetailPageBooking /> },
+          { path: "/facilities", element: <Facilities /> },
+          
 
         ],
       },
@@ -71,7 +69,7 @@ const router = createBrowserRouter([
 
   // Admin-only routes
   {
-    element: <ProtectedRoute roleAllowed={["Sales Person"]} />,
+    element: <ProtectedRoute roleAllowed={["Salesman"]} />,
     children: [
       {
         element: <DashboardLayout />,
@@ -97,13 +95,14 @@ const router = createBrowserRouter([
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yacht", element: <Yatch /> },
 
+
           { path: "/addons", element: <AddonsTable /> },
           { path: "/blockedperiods", element: <BlockPeriodsTable /> },
           { path: "/incentivelevels", element: <IncentiveLevelTable /> },
           { path: "/users", element: <UserTable /> },
 
-          { path: "/yatch/:id", element: <YachtDetail /> },
 
+          { path: "/yatch/:id", element: <YachtDetail /> },
         ],
       },
     ],
