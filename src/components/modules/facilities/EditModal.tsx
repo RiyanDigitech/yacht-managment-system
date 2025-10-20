@@ -24,6 +24,7 @@ const EditFacilitiesModal = ({ open, onCancel, data }: any) => {
       {
         onSuccess: () => {
           form.resetFields();
+          message.success("Facility created successfully!");
           onCancel();
         },
         onError: (error: any) => {
