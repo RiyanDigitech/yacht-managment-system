@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { MdDashboard } from "react-icons/md";
-import { CloseCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined } from "@ant-design/icons";
-import { MdShoppingBag } from "react-icons/md";
+import { CloseCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+//import { MdShoppingBag } from "react-icons/md";
 import { MdReceipt } from "react-icons/md";
 
 import { Input, Layout, Menu, theme, Dropdown, MenuProps } from "antd";
@@ -203,21 +203,21 @@ const DashboardLayout = () => {
                     ),
                     label: <div className="text-textcolor">Dashboard</div>,
                   },
-                  {
-                    key: "/franchise-list",
-                    icon: (
-                      <MdShoppingBag
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className=" text-textcolor">
-                        Franchise Management
-                      </div>
-                    ),
-                  },
+                  // {
+                  //   key: "/franchise-list",
+                  //   icon: (
+                  //     <MdShoppingBag
+                  //       className={`${
+                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                  //       }`}
+                  //     />
+                  //   ),
+                  //   label: (
+                  //     <div className=" text-textcolor">
+                  //       Franchise Management
+                  //     </div>
+                  //   ),
+                  // },
                   {
                     key: "/yacht",
                     icon: (
@@ -281,6 +281,32 @@ const DashboardLayout = () => {
                     ),
                     label: (
                       <div className="text-textcolor">Invoices</div>
+                    ),
+                  },
+                  {
+                    key: "/incentivelevels",
+                    icon: (
+                      <MdReceipt
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Incentive Levels</div>
+                    ),
+                  },
+                  {
+                    key: "/users",
+                    icon: (
+                      <UserOutlined
+                        className={`${
+                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                        }`}
+                      />
+                    ),
+                    label: (
+                      <div className="text-textcolor">Users</div>
                     ),
                   },
                 ]}

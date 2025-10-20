@@ -1,31 +1,30 @@
 import { useForm } from "react-hook-form";
 import { Button, message, Modal } from "antd";
 import { useState } from "react";
-import AddonsService from "@/services/addons-service/AddonsService";
-import { AddonData, CreateAddonResponse } from "@/lib/types/addon";
+import { CreateIncentiveResponse, IncentiveData } from "@/lib/types/incentive";
+import IncentiveService from "@/services/incentive-level-service/IncentiveLevelService";
 
 
-interface AddonsModalProps {
+interface IncentiveModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
-  const { handleSubmit } = useForm<AddonData>();
+const CreateIncentiveModal = ({ isOpen, onClose }: IncentiveModalProps) => {
+  const { handleSubmit } = useForm<IncentiveData>();
 
-  const onSubmit = (data: AddonData) => {
+  const onSubmit = (data: IncentiveData) => {
     console.log("Form Data:", data);
     alert("Form submitted successfully!");
   };
 
  
-  const { useCreateAddons } = AddonsService();
+  const { useCreateIncentive } = IncentiveService();
 
-  const mutation = useCreateAddons();
+  const mutation = useCreateIncentive();
 
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [discount_percentage, setDiscountPercentage] = useState("");
 
 
 
@@ -33,36 +32,33 @@ const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
     const formData = new FormData();
 
     formData.append("name", name);
-    formData.append("description", description);
-    formData.append("price", price);
+    formData.append("discount_percentage", discount_percentage);
     
 
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    // console.log("addons values", {
+    // console.log("incentive values", {
     //   name,
-    //   description,
-    //   price,
-     
+    //   discount_percentage,
     // });
 
     mutation.mutate(
       { data: formData },
       {
-        onSuccess: (res:CreateAddonResponse) => {
-          message.success(res?.message || "Addons Created Successfully");
+        onSuccess: (res:CreateIncentiveResponse) => {
+          message.success(res?.message || "Incentive Created Successfully");
           onClose();
           // Reset fields
           setName("");
-          setDescription("");
-          setPrice("");
+          setDiscountPercentage("");
+        
          
         
         },
         onError: (err: any) => {
-          const msg = err?.response?.data?.message || "Failed to create Addons";
+          const msg = err?.response?.data?.message || "Failed to create Incentive";
           message.error(msg);
           
 
@@ -73,7 +69,7 @@ const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
 
   return (
     <Modal
-      title="Create Addons"
+      title="Create Incentive Level"
       open={isOpen}
       onCancel={onClose}
       footer={[
@@ -117,34 +113,15 @@ const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
               />
             </div>
           </div>
-          <div className="space-y-2 font-poppins">
-            <label className="text-[16px] font-semibold ">Description</label>
-            <div className="flex items-center border rounded-md px-3 py-2">
-              <input
-                type="text"
-                value={description}
-                //onChange={(e) => setDescription(e.target.value)}
-                onChange={(e) => {
-                let value = e.target.value;
-                value = value.toLowerCase();
-                value = value.replace(/(^\w{1})|(\.\s*\w{1})/g, (match) =>
-                  match.toUpperCase()
-                );
-                setDescription(value);
-              }}
-                placeholder="Enter Description"
-                className="flex-1 outline-none text-sm"
-              />
-            </div>
-          </div>
+        
 
-             <div className="mt-2 space-y-2 font-poppins">
-          <label className="block text-[16px] font-semibold mb-1">Price</label>
+        <div className="mt-2 space-y-2 font-poppins">
+          <label className="block text-[16px] font-semibold mb-1">Discount Percentage</label>
           <input
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Enter Price"
+            value={discount_percentage}
+            onChange={(e) => setDiscountPercentage(e.target.value)}
+            placeholder="Enter DiscountPercentage"
             className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none"
           />
         </div>
@@ -158,4 +135,4 @@ const CreateAddonsModal = ({ isOpen, onClose }: AddonsModalProps) => {
   );
 };
 
-export default CreateAddonsModal;
+export default CreateIncentiveModal;

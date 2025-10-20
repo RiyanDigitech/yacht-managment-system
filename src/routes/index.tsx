@@ -23,6 +23,8 @@ import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
 import YachtDetail from "@/components/modules/yatch/YachtDetail";
 import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
 import AddonsTable from "@/components/modules/Addons/AddonsTable";
+import IncentiveLevelTable from "@/components/modules/Incentive-level/IncentivelevelTable";
+import UserTable from "@/components/modules/users/UserTable";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +99,8 @@ const router = createBrowserRouter([
 
           { path: "/addons", element: <AddonsTable /> },
           { path: "/blockedperiods", element: <BlockPeriodsTable /> },
+          { path: "/incentivelevels", element: <IncentiveLevelTable /> },
+          { path: "/users", element: <UserTable /> },
 
           { path: "/yatch/:id", element: <YachtDetail /> },
 

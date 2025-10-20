@@ -3,33 +3,33 @@ import {
 
     DeleteOutlined,
   EditOutlined,
+  //EditOutlined,
   LoadingOutlined,
   MoreOutlined,
 
 } from "@ant-design/icons";
 import { useState } from "react";
-import IncentiveService from "@/services/incentive-level-service/IncentiveLevelService";
-import CreateIncentiveModal from "./CreateIncentiveModal";
-import UpdateIncentiveModal from "./UpdateIncentive";
+import UserService from "@/services/user-service/UserService";
+import CreateUserModal from "./CreateUser";
+import UpdateUserModal from "./UpdateUser";
 
 
-
-function IncentiveLevelTable() {
+function UserTable() {
   const [open, setOpen] = useState(false);
-  const [editingIncentive, setEditingIncentive] = useState<boolean>(false);
-  const [editingIncentiveData, setEditingIncentiveData] = useState<string | null>(null);
+  const [editingUser, setEditingUser] = useState<boolean>(false);
+  const [editingUserData, setEditingUserData] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const { useGetIncentive ,useDeleteIncentive } = IncentiveService();
-  const { data: incentive, isLoading } = useGetIncentive( page, pageSize);
+  const { useGetUsers,useDeleteUser  } = UserService();
+  const { data: users, isLoading } = useGetUsers( page, pageSize);
   
-  const deleteIncentive = useDeleteIncentive();
+  const deleteUser = useDeleteUser();
 
   const handleDelete = (id: number, callbacks?: any) => {
   if (!id) return;
 
-  deleteIncentive.mutate(
+  deleteUser.mutate(
     { id },
     {
       onSuccess: (res) => {
@@ -63,10 +63,44 @@ const columns = [
     key: "name",
   },
   {
-    title: "DiscountPercentage",
-    dataIndex: "discount_percentage",
-    key: "discount_percentage",
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+ 
+  {
+    title: "Phone",
+    dataIndex: "phone",
+    key: "phone",
     render: (value: any) => value || <span className="">—</span>,
+  },
+  {
+    title: "MobileVerifiedAt",
+    dataIndex: "mobile_verified_at",
+    key: "mobile_verified_at",
+    render: (value: any) => value || <span className="">—</span>,
+  },
+  {
+    title: "IncentiveLevelId",
+    dataIndex: "incentive_level_id",
+    key: "incentive_level_id",
+    render: (value: any) => value || <span className="">—</span>,
+  },
+  {
+    title: "CeoSpecialApproval",
+    dataIndex: "ceo_special_approval",
+    key: "ceo_special_approval",
+    render: (value: any) => value || <span className="">—</span>,
+  },
+
+  {
+    title: "Role",
+    dataIndex: "roles",
+    key: "role_name",
+    render: (roles: any[]) =>
+      roles && roles.length > 0
+        ? roles.map((role) => role.name).join(", ")
+        : <span className="">—</span>,
   },
 
   // {
@@ -75,20 +109,20 @@ const columns = [
   //   key: "is_active",
   // },
 
-    {
-      title: "Created At",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: (text: string) =>
-        new Date(text).toLocaleString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }),
-    },
+    // {
+    //   title: "Created At",
+    //   dataIndex: "created_at",
+    //   key: "created_at",
+    //   render: (text: string) =>
+    //     new Date(text).toLocaleString("en-GB", {
+    //       day: "2-digit",
+    //       month: "short",
+    //       year: "numeric",
+    //       hour: "2-digit",
+    //       minute: "2-digit",
+    //       hour12: true,
+    //     }),
+    // },
     
     // {
     //   title: "Updated At",
@@ -117,13 +151,13 @@ const columns = [
               key="edit"
               icon={<EditOutlined />}
               onClick={() => {
-                setEditingIncentiveData(record); 
-                setEditingIncentive(true);
+                setEditingUserData(record); 
+                setEditingUser(true);
                 setOpen(false);
               }}
             >
               Edit
-            </Menu.Item>
+            </Menu.Item> 
 
             <Menu.Item
               key="delete"
@@ -172,7 +206,7 @@ const columns = [
            <button className="bg-[#00a1b3] text-white py-2 px-3 rounded-lg" 
            onClick={() => setOpen(true)} 
            >
-                Create Incentive Level</button>
+                Create User</button>
         
       </div>
       <Spin
@@ -184,11 +218,11 @@ const columns = [
         <div className="overflow-x-auto">
           <Table
             columns={columns}
-            dataSource={incentive?.data || []}
+            dataSource={users?.data || []}
             pagination={{
-              current: incentive?.data?.page || page,
+              current: users?.data?.page || page,
               pageSize: pageSize,
-              total: incentive?.data?.total || 0,
+              total: users?.data?.total || 0,
               showSizeChanger: true,
               onChange: (p, ps) => {
                 setPage(p);
@@ -201,14 +235,14 @@ const columns = [
           />
         </div>
       </Spin>
-      <CreateIncentiveModal isOpen={open} onClose={() => setOpen(false)} />
-      <UpdateIncentiveModal
-        open={editingIncentive}
-        userData={editingIncentiveData}
-        onClose={() => setEditingIncentive(false)}
-      /> 
+       <CreateUserModal isOpen={open} onClose={() => setOpen(false)} />
+      <UpdateUserModal
+        open={editingUser}
+        userData={editingUserData}
+        onClose={() => setEditingUser(false)}
+      />  
     </div>
   );
 }
 
-export default IncentiveLevelTable;
+export default UserTable;
