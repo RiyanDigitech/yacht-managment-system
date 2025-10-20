@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Button, Modal, message, Select } from "antd";
 import BlockedPeriodsService from "@/services/blockPeriods-Service/blockPeriodsService";
 import YatchService from "@/services/yatch-service/YatchService";
+import dayjs from "dayjs";
 
 interface UpdateBlockedPeriodModalProps {
   open: boolean;
@@ -23,13 +25,16 @@ const UpdateBlockedPeriod = ({
   const [reason, setReason ] = useState("");
   const [yacht_id, setYachtId] = useState("");
 
+//   const formatDateTime = (value: string) => {
+//   return value.replace("T", " ") + ":00";
+// };
   const formatDateTime = (value: string) => {
-  return value.replace("T", " ") + ":00";
+  return dayjs(value).utc().format("YYYY-MM-DD HH:mm:ss");
 };
 
 
    const { useUpdateBlockedPeriods } = BlockedPeriodsService();
-  const { mutate: updateAddons, isPending } = useUpdateBlockedPeriods();
+  const { mutate: updateBlockedPeriod, isPending } = useUpdateBlockedPeriods();
 
   
   const { useGetYatch} = YatchService();
@@ -39,10 +44,10 @@ const UpdateBlockedPeriod = ({
     if (userData) {
         const toDatetimeLocal = (datetime: string) => {
           if (!datetime) return "";
-
+          //return dayjs.utc(datetime).local().format("YYYY-MM-DDTHH:mm");
           return datetime.replace(" ", "T").slice(0, 16);
         };
-        
+
       setStartTime(toDatetimeLocal(userData.start_time || ""));
       setEndTime(toDatetimeLocal(userData.end_time || ""));
       setReason(userData.reason || "");
@@ -69,7 +74,7 @@ const UpdateBlockedPeriod = ({
       yacht_id: Number(yacht_id),
     };
 
-    updateAddons(
+    updateBlockedPeriod(
       {
 
         id: userData.id,
@@ -177,53 +182,11 @@ const UpdateBlockedPeriod = ({
                   />
                 </div>
                 </div>
-      {/* <div className="space-y-4">
-        <div className="">
-          <label className="block text-gray-600 mb-1">Name</label>
-          <Input
-            type="text"
-            value={name}
-            //onChange={(e) => setName(e.target.value)}
-             onChange={(e) => {
-                  const value = e.target.value;
-                  const formatted = value.replace(/\b\w/g, (char) =>
-                    char.toUpperCase()
-                  );
-                  setName(formatted);
-                }}
-            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
-          />
-        </div>
-        <div className="">
-          <label className="block text-gray-600 mb-1">Description</label>
-          <Input
-            type="text"
-            value={description}
-               onChange={(e) => {
-                let value = e.target.value;
-                value = value.toLowerCase();
-                value = value.replace(/(^\w{1})|(\.\s*\w{1})/g, (match) =>
-                  match.toUpperCase()
-                );
-                setDescription(value);
-              }}
-            //onChange={(e) => setDescription(e.target.value)}
-            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
-          />
-        </div>
-        <div className="">
-          <label className="block text-gray-600 mb-1">Price</label>
-          <Input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
-          />
-        </div>
-
-      </div> */}
+     
     </Modal>
   );
 };
 
 export default UpdateBlockedPeriod;
+
+
