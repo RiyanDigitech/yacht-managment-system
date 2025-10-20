@@ -40,9 +40,9 @@ const useCreateBooking = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data }: { data: FormData }) => {
+    mutationFn: async ( data: FormData) => {
       return axios
-        .post(`/yachts`, data)
+        .post(`/bookings`, data)
         .then((res) => res.data);
     },
     onSuccess: () => {
