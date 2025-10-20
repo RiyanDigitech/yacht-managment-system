@@ -3,6 +3,8 @@ import { Modal, Form, Select, InputNumber, DatePicker, Button, message } from "a
 import dayjs from "dayjs";
 import YachtService from "@/services/yatch-service/YatchService";
 import BookingService from "@/services/booking-service/BookingServices";
+import AddonsService from "@/services/addons-service/AddonsService";
+import CustomerService from "@/services/customer-service/CustomerService";
 
 const { RangePicker } = DatePicker;
 
@@ -12,9 +14,10 @@ interface CreateBookingModalProps {
 }
 
 const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }) => {
+  
   const [form] = Form.useForm();
-  // const [addons, setAddons] = useState<any[]>([]);
-  // const [customers, setCustomers] = useState<any[]>([]);
+  const [addons, setAddons] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<any[]>([]);
   const [yachts, setYachts] = useState<any[]>([]);
 
   const { useCreateBooking } = BookingService();
@@ -22,26 +25,27 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
 
   // 🔹 Fetch Data from APIs
   const { useGetYatch } = YachtService();
-  // const { useGetAllCustomers } = CustomerService();
-  // const { useGetAllAddons } = AddonService();
+  const { useGetCustomer } = CustomerService();
+  const { useGetAddons } = AddonsService();
 
   const { data: yachtData } = useGetYatch();
-  // const { data: customerData } = useGetAllCustomers();
-  // const { data: addonData } = useGetAllAddons();
+  const { data: customerData } = useGetCustomer();
+  const { data: addonData } = useGetAddons();
 
   useEffect(() => {
     if (yachtData) setYachts(yachtData?.data || yachtData);
-  //   if (customerData) setCustomers(customerData?.data || customerData);
-  //   if (addonData) setAddons(addonData?.data || addonData);
-  // }, [yachtData, customerData, addonData]);
-  }, [yachtData]);
+    if (customerData) setCustomers(customerData?.data || customerData);
+    if (addonData) setAddons(addonData?.data || addonData);
+  }, [yachtData, customerData, addonData]);
+  
+
 
   // 🔹 Handle Submit
   const handleSubmit = async (values: any) => {
     try {
       const payload = {
         yacht_id: values.yacht_id,
-        customer_id: values.customer_id,
+        user_id: values.user_id,
         start_time: dayjs(values.dateRange[0]).format("YYYY-MM-DD HH:mm:ss"),
         end_time: dayjs(values.dateRange[1]).format("YYYY-MM-DD HH:mm:ss"),
         sales_type: values.sales_type,
@@ -51,14 +55,14 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
         })),
       };
 
-      // await createBooking.mutateAsync(payload);
+      await createBooking.mutateAsync(payload);
       console.log("Create Booking Data" , payload)
       message.success("Booking created successfully!");
       form.resetFields();
       onClose();
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
-      message.error("Failed to create booking!");
+      message.error(error.response.data.message||"Failed to create booking!");
     }
   };
 
@@ -69,13 +73,14 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
       onCancel={onClose}
       footer={null}
       centered
-      destroyOnClose
+      // destroyOnClose
     >
       <Form
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
         className="mt-4"
+        preserve={false}
       >
         {/* Yacht Dropdown */}
         <Form.Item
@@ -94,12 +99,12 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
 
         {/* Customer Dropdown */}
         <Form.Item
-          name="customer_id"
+          name="user_id"
           label="Select Customer"
           rules={[{ required: true, message: "Please select a customer" }]}
         >
           <Select placeholder="Select Customer">
-            {yachts?.map((item: any) => (
+            {customers?.map((item: any) => (
               <Select.Option key={item.id} value={item.id}>
                 {item.name}
               </Select.Option>
@@ -109,16 +114,22 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
 
         {/* Date Range */}
         <Form.Item
-          name="dateRange"
-          label="Booking Duration"
-          rules={[{ required: true, message: "Please select date & time" }]}
-        >
-          <RangePicker
-            showTime
-            format="YYYY-MM-DD HH:mm"
-            className="w-full"
-          />
-        </Form.Item>
+  name="dateRange"
+  label="Booking Duration"
+  rules={[{ required: true, message: "Please select date & time" }]}
+  preserve={true} 
+>
+  <RangePicker
+    showTime
+    format="YYYY-MM-DD HH:mm"
+    className="w-full"
+    allowClear={false} 
+    onChange={(value) => {
+      console.log("Selected:", value);
+    }}
+  />
+</Form.Item>
+
 
         {/* Sales Type */}
         <Form.Item
@@ -146,7 +157,7 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
                     rules={[{ required: true, message: "Select an addon" }]}
                   >
                     <Select placeholder="Select Addon">
-                      {yachts?.map((addon: any) => (
+                      {addons?.map((addon: any) => (
                         <Select.Option key={addon.id} value={addon.id}>
                           {addon.name}
                         </Select.Option>

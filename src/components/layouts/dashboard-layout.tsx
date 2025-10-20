@@ -158,13 +158,11 @@ const DashboardLayout = () => {
           collapsible
         >
           {getSiderWidth() > 70 && (
-            <div className="w-full flex justify-center items-center opacity-100 h-17 ">
+            <div className="flex justify-center items-center opacity-100 h-14 w-45 mt-3 ml-5 ">
               <img
                 className=""
                 src={"/smartchoice.png"}
                 alt="logo"
-                // width={180}
-                height={10}
               />
             </div>
           )}{" "}
