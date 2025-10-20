@@ -61,12 +61,12 @@ const columns = [
     key: "id",
     width: 70,
   },
-  {
-    title: "YachtId",
-    dataIndex: "yacht_id",
-    key: "yacht_id",
-    width: 70,
-  },
+  // {
+  //   title: "YachtId",
+  //   dataIndex: "yacht_id",
+  //   key: "yacht_id",
+  //   width: 70,
+  // },
  
   {
     title: "StartTime",
@@ -74,7 +74,7 @@ const columns = [
     key: "start_time",
        render: (text: string) =>
       text
-        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm")
+        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm: A")
         : "-",
 
   },
@@ -84,7 +84,7 @@ const columns = [
     key: "end_time",
         render: (text: string) =>
       text
-        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm")
+        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm A")
         : "-",
   },
    {
