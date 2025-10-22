@@ -105,7 +105,7 @@ const UpdateUserModal = ({
     >
       <div className="space-y-4">
         <div className="">
-          <label className="block text-gray-600 mb-1">Name</label>
+          <label className="block text-[16px] font-semibold mb-1">Name</label>
           <Input
             type="text"
             value={name}
@@ -117,7 +117,7 @@ const UpdateUserModal = ({
               );
               setName(formatted);
             }}
-            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
+            className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none !border-[#D1D5DB] hover:!border-[#D1D5DB]"
           />
         </div>
   <div className="mt-2 space-y-2 font-poppins">
@@ -129,7 +129,7 @@ const UpdateUserModal = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
-              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none"
+              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none !border-[#D1D5DB] hover:!border-[#D1D5DB]"
             />
           </div>
 
@@ -138,11 +138,11 @@ const UpdateUserModal = ({
               Phone
             </label>
             <input
-              type="number"
+              type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter Phone"
-              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none"
+              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none !border-[#D1D5DB] hover:!border-[#D1D5DB]"
             />
           </div>
 
@@ -179,12 +179,12 @@ const UpdateUserModal = ({
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none"
+              className="w-full border rounded-lg p-2 text-sm text-gray-700 bg-white shadow-sm outline-none resize-none !border-[#D1D5DB] hover:!border-[#D1D5DB]"
             >
-              <option value="">Select Role</option>
+              {/* <option value="">Select Role</option> */}
             
               <option value="Sales Person">Sales Person</option>
-              <option value="Customer">Customer</option>
+             
             </select>
 
          

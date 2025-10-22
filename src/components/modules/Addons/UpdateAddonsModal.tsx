@@ -62,8 +62,11 @@ const UpdateAddonsModal = ({
           onClose();
         },
         onError: (error: any) => {
-          console.error("Update Error:", error);
-          message.error("Failed to update Addons");
+          // console.error("Update Error:", error);
+          // message.error("Failed to update Addons");
+          const msg = error?.response?.data?.message || "Failed to update Addons";
+                    message.error(msg);
+          
         },
       }
     );

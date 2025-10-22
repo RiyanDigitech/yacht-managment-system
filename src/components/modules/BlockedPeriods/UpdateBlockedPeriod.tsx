@@ -44,8 +44,8 @@ const UpdateBlockedPeriod = ({
     if (userData) {
         const toDatetimeLocal = (datetime: string) => {
           if (!datetime) return "";
-          //return dayjs.utc(datetime).local().format("YYYY-MM-DDTHH:mm");
-          return datetime.replace(" ", "T").slice(0, 16);
+          return dayjs.utc(datetime).local().format("YYYY-MM-DDTHH:mm");
+          //return datetime.replace(" ", "T").slice(0, 16);
         };
 
       setStartTime(toDatetimeLocal(userData.start_time || ""));
@@ -86,8 +86,11 @@ const UpdateBlockedPeriod = ({
           onClose();
         },
         onError: (error: any) => {
-          console.error("Update Error:", error);
-          message.error("Failed to update BlockedPeriod");
+          // console.error("Update Error:", error);
+          // message.error("Failed to update BlockedPeriod");
+          const msg = error?.response?.data?.message || "Failed to update BlockedPeriod";
+          message.error(msg);
+          
         },
       }
     );

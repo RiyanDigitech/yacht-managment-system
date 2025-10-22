@@ -81,11 +81,37 @@ const IncentiveService = () => {
   });
   };
 
+  const useAssignIncentive = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string | number;
+      data:  {
+        
+        incentive_level_id: number;
+    
+      };
+    }) => {
+      return axios
+        .put(`/salespersons/${id}/incentive`, data)
+        .then((res) => res.data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["incentive"] });
+      
+    },
+  });
+  };
+
   return {
     useGetIncentive,
     useCreateIncentive,
     useDeleteIncentive,
-    useUpdateIncentive
+    useUpdateIncentive,useAssignIncentive
   };
 };
 

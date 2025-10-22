@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, Input, InputNumber, Upload, Modal, message } from "antd";
+import { Button, Form, Input, InputNumber, Upload, Modal, message, Select } from "antd";
 import { DeleteOutlined, LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import YatchService from "@/services/yatch-service/YatchService";
+import FacilitiesService from "@/services/facilities-service/facilities-service";
 
 const YachtDetail = () => {
   const { id } = useParams();
@@ -16,9 +17,27 @@ const YachtDetail = () => {
   const [previewImages, setPreviewImages] = useState<any[]>([]);
   const [isChanged, setIsChanged] = useState(false);
 
+  // useEffect(() => {
+  //   if (yatch) form.setFieldsValue(yatch);
+  // }, [yatch]);
+
   useEffect(() => {
-    if (yatch) form.setFieldsValue(yatch);
-  }, [yatch]);
+  console.log("Yatch details:", yatch);
+
+  if (yatch) {
+    const formattedValues = {
+      ...yatch,
+      facilities: yatch.facilities?.map((f: any) => f.id) || [],
+    };
+    form.setFieldsValue(formattedValues);
+  }
+}, [yatch]);
+
+
+  
+  const { useGetFacilities } = FacilitiesService();
+  const { data: facilities } = useGetFacilities();
+
 
   // ✅ delete image with correct API
   const handleImageRemove = async (e: React.MouseEvent, url: string) => {
@@ -40,8 +59,10 @@ const YachtDetail = () => {
           refetch();
           setIsChanged(true); // user made change
         } catch (error) {
-          console.error(error);
-          message.error("Failed to delete image!");
+           const msg = error?.response?.data?.message || "Failed to Update yacht";
+            message.error(msg);
+          // console.error(error);
+          // message.error("Failed to delete image!");
         }
       },
     });
@@ -68,6 +89,7 @@ const YachtDetail = () => {
       formData.append("washrooms", values.washrooms);
       formData.append("per_hour_rate", values.per_hour_rate);
       formData.append("currency", values.currency);
+      formData.append("facility_ids[]", values.facility_ids);
 
       previewImages.forEach((file: any) => {
         if (file.originFileObj) {
@@ -155,6 +177,27 @@ const YachtDetail = () => {
           >
             <Input placeholder="Enter currency" />
           </Form.Item>
+
+             <Form.Item
+            label="Facilities"
+            name="facilities"
+            //rules={[{ required: true, message: "Please select facilities" }]}
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              loading={isLoading}
+              className="[&_.ant-select-selector]:!text-graysecondary [&_.ant-select-selector]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:hover]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:focus]:!border-[#D1D5DB]"
+            >
+              {facilities?.data?.map((facility: any) => (
+                <Select.Option key={facility.id} value={facility.id}>
+                  {facility.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
         </div>
 
         {/* ✅ Image Section */}
@@ -196,7 +239,6 @@ const YachtDetail = () => {
           </div>
         </Form.Item>
 
-        {/* ✅ Update button */}
         <div className="flex justify-end">
           <Button
             type="primary"

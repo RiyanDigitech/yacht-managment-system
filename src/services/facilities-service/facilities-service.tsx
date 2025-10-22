@@ -76,7 +76,7 @@ const FacilitiesService = () => {
       const res = await axios.delete(`/facilities/${id}`);
       return res.data;
     },
-    onSuccess: (_data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["facilities"] });
     },
   });
