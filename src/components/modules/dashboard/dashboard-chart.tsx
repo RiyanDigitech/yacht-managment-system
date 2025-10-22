@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import tokenService from "@/services/token.service";
 import DashboardService from "@/services/dashboradservice/DashboardService";
 import { LoadingOutlined } from "@ant-design/icons"
+import Celender from "../celender/Celender";
 
 const StatsChart = () => {
   const { useGetDashboard } = DashboardService();
@@ -102,16 +103,9 @@ const StatsChart = () => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-2xl max-w-3xl w-full mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6 text-[#00a1b3]">
-        Dashboard Statistics
-      </h1>
-      <Chart
-        options={chartData.options}
-        series={chartData.series}
-        type="bar"
-        height={350}
-      />
+    <div className="p-6 rounded-xl shadow-2xl w-full mx-auto">
+      <Celender />
+      
     </div>
   );
 };

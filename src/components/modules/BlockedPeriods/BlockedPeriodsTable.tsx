@@ -12,6 +12,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import CreateBlockedPeriod from "./CreateBlockedPeriod";
 import UpdateBlockedPeriod from "./UpdateBlockedPeriod";
+import { parseISO , format} from "date-fns";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -68,24 +69,25 @@ const columns = [
   //   width: 70,
   // },
  
-  {
-    title: "StartTime",
+   {
+    title: "Start Time",
     dataIndex: "start_time",
     key: "start_time",
-       render: (text: string) =>
-      text
-        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm: A")
-        : "-",
-
+    render: (text: any) => {
+      if (!text) return "-";
+      const date = parseISO(text); // UTC → JS Date object
+      return format(date, "MMM d, yyyy, h:mm a"); // e.g. "Oct 31, 2025, 12:00 AM"
+    },
   },
   {
     title: "End Time",
     dataIndex: "end_time",
     key: "end_time",
-        render: (text: string) =>
-      text
-        ? dayjs.utc(text).format("YYYY-MM-DD HH:mm A")
-        : "-",
+    render: (text: any) => {
+      if (!text) return "-";
+      const date = parseISO(text); // UTC → JS Date object
+      return format(date, "MMM d, yyyy, h:mm a"); // e.g. "Nov 1, 2025, 2:00 AM"
+    },
   },
    {
     title: "Reason",
