@@ -7,7 +7,7 @@ const EditStatusModal = ({ open, onCancel, onOk, id }: any) => {
   const { useUpdateBooking } = BookingServices();
   const UpdateBooking = useUpdateBooking();
 
-  console.log(id)
+  // console.log(id)
 
   const handleEditModal = (values: any) => {
     // console.log("Updated Status:", values);

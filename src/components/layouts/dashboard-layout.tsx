@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { MdDashboard } from "react-icons/md";
-import { CloseCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+import { MdDashboard, MdGppGood } from "react-icons/md";
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 //import { MdShoppingBag } from "react-icons/md";
 import { MdReceipt } from "react-icons/md";
+// import { CiCalendarDate } from "react-icons/ci";
+import { BsCalendarDateFill } from "react-icons/bs";
+import { IoSettingsSharp } from "react-icons/io5";
+import { FaFileInvoice, FaStar } from "react-icons/fa";
+import { GiLevelFour, GiShipBow } from "react-icons/gi";
 
 import { Input, Layout, Menu, theme, Dropdown, MenuProps } from "antd";
 import {  Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -13,13 +18,13 @@ const { Header, Sider, Content } = Layout;
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
 
-const person = tokenService.getUser();
+// const person = tokenService.getUser();
 const DashboardLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState("");
 
   const [see, setSee] = useState(true);
-  const [lastPersonData, setLastPersonData] = useState("");
+  // const [lastPersonData, setLastPersonData] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const {
@@ -93,18 +98,18 @@ const DashboardLayout = () => {
   console.log(see, collapsed);
  
   const items: MenuProps["items"] = [
-    {
-      key: "",
-      label: (
-        <div
-          className="flex justify-center cursor-default"
-          // onClick={HomeNavigate}
-        >
-          <img src="/profile.png" className="h-10 w-10 rounded-full" alt="" />
-        </div>
-      ),
-      disabled: true,
-    },
+    // {
+    //   key: "",
+    //   // label: (
+    //     // <div
+    //     //   className="flex justify-center cursor-default"
+    //     //   // onClick={HomeNavigate}
+    //     // >
+    //     //   <img src="/profile.png" className="h-10 w-10 rounded-full" alt="" />
+    //     // </div>
+      // ),
+    //   disabled: true,
+    // },
 
     {
       key: "3",
@@ -219,7 +224,7 @@ const DashboardLayout = () => {
                   {
                     key: "/yacht",
                     icon: (
-                      <MdReceipt
+                      <GiShipBow 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
@@ -232,7 +237,7 @@ const DashboardLayout = () => {
                   {
                     key: "/addons",
                     icon: (
-                      <UserAddOutlined
+                      <FaStar 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
@@ -245,16 +250,29 @@ const DashboardLayout = () => {
                   {
                     key: "/blockedperiods",
                     icon: (
-                      <CloseCircleOutlined 
+                      <IoSettingsSharp  
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
                       />
                     ),
                     label: (
-                      <div className="text-textcolor">BlockedPeriods</div>
+                      <div className="text-textcolor">Maintenance</div>
                     ),
                   },
+                  //  {
+                  //   key: "/celender",
+                  //   icon: (
+                  //     <BsCalendarDateFill  
+                  //       className={`${
+                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                  //       }`}
+                  //     />
+                  //   ),
+                  //   label: (
+                  //     <div className="text-textcolor">Calender</div>
+                  //   ),
+                  // },
                   {
                     key: "/bookings",
                     icon: (
@@ -268,24 +286,24 @@ const DashboardLayout = () => {
                       <div className="text-textcolor">Bookings</div>
                     ),
                   },
-                  {
-                    key: "/invoices",
-                    icon: (
-                      <MdReceipt
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className="text-textcolor">Invoices</div>
-                    ),
-                  },
+                  // {
+                  //   key: "/invoices",
+                  //   icon: (
+                  //     <FaFileInvoice 
+                  //       className={`${
+                  //         collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+                  //       }`}
+                  //     />
+                  //   ),
+                  //   label: (
+                  //     <div className="text-textcolor">Invoices</div>
+                  //   ),
+                  // },
                   {
 
                     key: "/incentivelevels",
                     icon: (
-                      <MdReceipt
+                      <GiLevelFour 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
@@ -312,7 +330,7 @@ const DashboardLayout = () => {
                   {
                     key: "/facilities",
                     icon: (
-                      <UserOutlined
+                      <MdGppGood 
                         className={`${
                           collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
                         }`}
@@ -351,19 +369,7 @@ const DashboardLayout = () => {
                     label: <div className="text-textcolor">Dashboard</div>,
                   },
 
-                  {
-                    key: "/lead",
-                    icon: (
-                      <MdReceipt
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className="text-textcolor">Lead Management</div>
-                    ),
-                  },
+                  
                   {
                     key: "/bookings",
                     icon: (
@@ -376,21 +382,7 @@ const DashboardLayout = () => {
                     label: (
                       <div className="text-textcolor">Bookings</div>
                     ),
-                  },
-                  {
-                    key: "/invoices",
-                    icon: (
-                      <MdReceipt
-                        className={`${
-                          collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
-                        }`}
-                      />
-                    ),
-                    label: (
-                      <div className="text-textcolor">Invoices</div>
-                    ),
-                  },
-                  
+                  },                
 
                 ]}
               />
@@ -487,24 +479,24 @@ const DashboardLayout = () => {
               <div className="font-DMSans text-textcolor font-bold text-lg max-sm:hidden">
                 {currentPage === "Lead" ? "Lead List" : currentPage}
               </div>
-              <div className=" w-8/12 sm:w-3/12 lg:w-80 flex items-center justify-between">
+              <div className=" w-8/12 sm:w-3/12 lg:w-80 flex items-end justify-end">
                 {currentPage !== "Account Details" ? (
                   <>
                     {" "}
-                    <div
+                    {/* <div
                       className={`bg-[#f1f5f9] w-9 h-9 rounded-full justify-center items-center ${
                         see ? "flex" : "hidden"
                       }`}
                     >
                       <img src="/msg.png" alt="img" className="h-3 w-4" />
-                    </div>
-                    <div className="bg-[#f1f5f9] w-9 h-9 rounded-full flex justify-center items-center ">
+                    </div> */}
+                    {/* <div className="bg-[#f1f5f9] w-9 h-9 rounded-full flex justify-center items-center ">
                       <img
                         src="/notification.png"
                         alt="img"
                         className="h-4 w-4"
                       />
-                    </div>
+                    </div> */}
                   </>
                 ) : (
                   ""
@@ -514,8 +506,8 @@ const DashboardLayout = () => {
                   <div className="flex items-center cursor-pointer">
                     <div>
                       <img
-                        src="/profile.png"
-                        className="rounded-full"
+                        src="/UserProfile.png"
+                        className="rounded-full h-10 w-10 border border-black-2"
                         alt="img"
                       />
                     </div>

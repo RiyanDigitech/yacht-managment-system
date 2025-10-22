@@ -7,10 +7,11 @@ import {
     MoreOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { MdCancel } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import BookingServices from "@/services/booking-service/BookingServices";
 import EditStatusModal from "./EditModal";
+import { parseISO, format } from "date-fns";
+import { FaFileInvoice } from "react-icons/fa";
 
 
 
@@ -64,38 +65,26 @@ function BookingTable() {
             key: "id",
             width: 70,
         },
-        {
-            title: "Start Time",
-            dataIndex: "start_time",
-            key: "start_time",
-            render: (text:any) => {
-                const date = new Date(text);
-                return date.toLocaleString("en-PK", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                });
-            },
-        },
-        {
-            title: "End Time",
-            dataIndex: "end_time",
-            key: "end_time",
-            render: (text) => {
-                const date = new Date(text);
-                return date.toLocaleString("en-PK", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                });
-            },
-        },
+       {
+  title: "Start Time",
+  dataIndex: "start_time",
+  key: "start_time",
+  render: (text: any) => {
+    if (!text) return "-";
+    const date = parseISO(text); // UTC → JS Date object
+    return format(date, "MMM d, yyyy, h:mm a"); // e.g. "Oct 31, 2025, 12:00 AM"
+  },
+},
+{
+  title: "End Time",
+  dataIndex: "end_time",
+  key: "end_time",
+  render: (text: any) => {
+    if (!text) return "-";
+    const date = parseISO(text); // UTC → JS Date object
+    return format(date, "MMM d, yyyy, h:mm a"); // e.g. "Nov 1, 2025, 2:00 AM"
+  },
+},
         //  {
         //   title: "Image",
         //   key: "image_paths",
@@ -147,7 +136,7 @@ function BookingTable() {
             title: "Sales Type",
             dataIndex: "sales_type",
             key: "sales_type",
-            render: (text:any) => {
+            render: (text: any) => {
                 let color = "blue";
 
                 if (text?.toLowerCase() === "online") {
@@ -163,7 +152,7 @@ function BookingTable() {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            render: (text:any) => {
+            render: (text: any) => {
                 let color = "blue";
 
                 if (text?.toLowerCase() === "paid") {
@@ -171,7 +160,7 @@ function BookingTable() {
                 } else if (text?.toLowerCase() === "cancelled") {
                     color = "red";
                 }
-                 else if (text?.toLowerCase() === "pending") {
+                else if (text?.toLowerCase() === "pending") {
                     color = "yellow";
                 }
 
@@ -206,6 +195,33 @@ function BookingTable() {
                     overlay={
                         <Menu>
                             <Menu.Item
+                                key="Invoice"
+                                icon={<FaFileInvoice />}
+                                // danger
+                                onClick={() => {
+                                    naviagte(`/invoices/${record.id}`)
+
+                                    // Modal.confirm({
+                                    //     title: "Confirm Deletion",
+                                    //     content: `Are you sure you want to delete "${record.name}"?`,
+                                    //     okText: "Yes",
+                                    //     cancelText: "No",
+                                    //     okButtonProps: {
+                                    //         className: "bg-green-600 text-white hover:!bg-green-700",
+                                    //     },
+                                    //     onOk: () =>
+                                    //         new Promise((resolve, reject) => {
+                                    //             handleDelete(record.id, {
+                                    //                 onSuccess: () => resolve(null),
+                                    //                 onError: (err: any) => reject(err),
+                                    //             });
+                                    //         }),
+                                    // });
+                                }}
+                            >
+                                View Invoice
+                            </Menu.Item>
+                            <Menu.Item
                                 key="edit"
                                 icon={<EditOutlined />}
                                 onClick={() => {
@@ -221,7 +237,7 @@ function BookingTable() {
                                 icon={<EyeFilled />}
                                 // danger
                                 onClick={() => {
-   naviagte(`/view-booking/${record.id}`)
+                                    naviagte(`/view-booking/${record.id}`)
 
                                     // Modal.confirm({
                                     //     title: "Confirm Deletion",
@@ -309,9 +325,9 @@ function BookingTable() {
     );
 
     return (
-        <div className="p-4   rounded-[10px]">
+        <div className="p-4 rounded-[10px]">
 
-
+            {/* <Booking /> */}
             {/* Table */}
             <Spin
                 spinning={isLoading}
@@ -347,7 +363,7 @@ function BookingTable() {
       }}
       editingExpense={editingExpense}
     /> */}
-    <EditStatusModal open={open} onCancel={handleClose} id={editingExpense} />
+            <EditStatusModal open={open} onCancel={handleClose} id={editingExpense} />
         </div>
     );
 }

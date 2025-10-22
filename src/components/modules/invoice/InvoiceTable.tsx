@@ -1,12 +1,14 @@
-import {  Dropdown, Menu, message, Modal, Spin, Table } from "antd";
+import { Dropdown, Menu, Spin, Table } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   LoadingOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import YatchService from "@/services/yatch-service/YatchService";
+import InvoicesService from "@/services/invoices-service/InvoiceServices";
+import { useParams } from "react-router-dom";
 
 
 
@@ -17,141 +19,174 @@ function InvoiceTable() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const { useGetYatch, useDeleteYatch } = YatchService();
-  const { data:yatch, isLoading } = useGetYatch( page, pageSize);
-  const deleteExpense = useDeleteYatch();
+  const { id } = useParams()
 
-const handleDelete = (id: number, callbacks?: any) => {
-  if (!id) return;
+  console.log(editingExpense , open)
 
-  deleteExpense.mutate(
-    { id },
+  const { useGetInvoice, useDeleteInvoice } = InvoicesService();
+  const { data: InvoiceData, isLoading } = useGetInvoice(id, page, pageSize);
+  // const deleteExpense = useDeleteInvoice();
+
+  console.log("InvoiceData", InvoiceData)
+
+  // const handleDelete = (id: number, callbacks?: any) => {
+  //   if (!id) return;
+
+  //   deleteExpense.mutate(
+  //     { id },
+  //     {
+  //       onSuccess: (res) => {
+  //         if (res?.success) {
+  //           message.success(res.message || "Deleted successfully");
+  //           callbacks?.onSuccess?.();
+  //         } else {
+  //           message.error(res?.message || "Failed to delete expense");
+  //           callbacks?.onError?.();
+  //         }
+  //       },
+  //       onError: (err: any) => {
+  //         message.error(err?.response?.data?.message || "Delete request failed");
+  //         callbacks?.onError?.();
+  //       },
+  //     }
+  //   );
+  // };
+
+  //   import { Dropdown, Menu, Modal } from "antd";
+  // import { EditOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons";
+
+  const columns = [
     {
-      onSuccess: (res) => {
-        if (res?.success) {
-          message.success(res.message || "Deleted successfully");
-          callbacks?.onSuccess?.();
-        } else {
-          message.error(res?.message || "Failed to delete expense");
-          callbacks?.onError?.();
-        }
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      width: 70,
+    },
+    {
+      title: "Invoice Number",
+      dataIndex: "invoice_number",
+      key: "invoice_number",
+    },
+    //  {
+    //   title: "Image",
+    //   key: "image_paths",
+    //   render: (_: any, record: any) => {
+    //     const url =
+    //       record.image_paths && record.image_paths.length > 0
+    //         ? record.image_paths[0]
+    //         : null;
+
+    //     return (
+    //       <div className="flex justify-center">
+    //         {url ? (
+    //           <img
+    //             src={url}
+    //             alt={record.name}
+    //             className="w-16 h-16 object-cover rounded-md border cursor-pointer"
+    //             onClick={() => {
+    //               Modal.info({
+    //                 title: record.name,
+    //                 centered: true,
+    //                 width: "auto",
+    //                 content: (
+    //                   <img
+    //                     src={url}
+    //                     alt={record.name}
+    //                     className="max-w-full max-h-[80vh] object-contain cursor-zoom-in"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       const modal = window.open(url, "_blank");
+    //                       if (modal) modal.focus();
+    //                     }}
+    //                   />
+    //                 ),
+    //                 okButtonProps: {
+    //                   className: "bg-green-600 text-white hover:!bg-green-700",
+    //                 },
+    //               });
+    //             }}
+    //           />
+    //         ) : (
+    //           <span className="text-gray-400 text-sm">No Image</span>
+    //         )}
+    //       </div>
+    //     );
+    //   },
+    // },
+
+    {
+      title: "Booking Id",
+      dataIndex: "booking_id",
+      key: "booking_id",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (text:any) => {
+        const date = new Date(text);
+        return date.toLocaleString("en-PK", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
       },
-      onError: (err: any) => {
-        message.error(err?.response?.data?.message || "Delete request failed");
-        callbacks?.onError?.();
+    },
+    {
+      title: "Updated At",
+      dataIndex: "updated_at",
+      key: "updated_at",
+      render: (text:any) => {
+        const date = new Date(text);
+        return date.toLocaleString("en-PK", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
       },
-    }
-  );
-};
+    },
+    // {
+    //   title: "Facilities",
+    //   dataIndex: "facilities",
+    //   key: "facilities",
+    //   render: (value: any) => value || <span className="text-gray-400">—</span>,
+    // },
+    // {
+    //   title: "Additional Fields",
+    //   dataIndex: "additional_fields",
+    //   key: "additional_fields",
+    //   render: (value: any) => value || <span className="text-gray-400">—</span>,
+    // },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, record: any) => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item
+                key="edit"
+                icon={<EyeOutlined />}
+                onClick={() => {
+                  setEditingExpense(record);
+                  setOpen(true);
+                }}
+              >
+                View More
+              </Menu.Item>
 
-//   import { Dropdown, Menu, Modal } from "antd";
-// import { EditOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons";
-
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    width: 70,
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
- {
-  title: "Image",
-  key: "image_paths",
-  render: (_: any, record: any) => {
-    const url =
-      record.image_paths && record.image_paths.length > 0
-        ? record.image_paths[0]
-        : null;
-
-    return (
-      <div className="flex justify-center">
-        {url ? (
-          <img
-            src={url}
-            alt={record.name}
-            className="w-16 h-16 object-cover rounded-md border cursor-pointer"
-            onClick={() => {
-              Modal.info({
-                title: record.name,
-                centered: true,
-                width: "auto",
-                content: (
-                  <img
-                    src={url}
-                    alt={record.name}
-                    className="max-w-full max-h-[80vh] object-contain cursor-zoom-in"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const modal = window.open(url, "_blank");
-                      if (modal) modal.focus();
-                    }}
-                  />
-                ),
-                okButtonProps: {
-                  className: "bg-green-600 text-white hover:!bg-green-700",
-                },
-              });
-            }}
-          />
-        ) : (
-          <span className="text-gray-400 text-sm">No Image</span>
-        )}
-      </div>
-    );
-  },
-},
-
-  {
-    title: "Capacity",
-    dataIndex: "capacity",
-    key: "capacity",
-  },
-  {
-    title: "Rooms",
-    dataIndex: "rooms",
-    key: "rooms",
-  },
-  {
-    title: "Washrooms",
-    dataIndex: "washrooms",
-    key: "washrooms",
-  },
-  {
-    title: "Facilities",
-    dataIndex: "facilities",
-    key: "facilities",
-    render: (value: any) => value || <span className="text-gray-400">—</span>,
-  },
-  {
-    title: "Additional Fields",
-    dataIndex: "additional_fields",
-    key: "additional_fields",
-    render: (value: any) => value || <span className="text-gray-400">—</span>,
-  },
-  {
-    title: "Actions",
-    key: "actions",
-    render: (_: any, record: any) => (
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item
-              key="edit"
-              icon={<EditOutlined />}
-              onClick={() => {
-                setEditingExpense(record);
-                setOpen(true);
-              }}
-            >
-              Edit
-            </Menu.Item>
-
-            <Menu.Item
+              {/* <Menu.Item
               key="delete"
               icon={<DeleteOutlined />}
               danger
@@ -175,16 +210,16 @@ const columns = [
               }}
             >
               Delete
-            </Menu.Item>
-          </Menu>
-        }
-        trigger={["click"]}
-      >
-        <MoreOutlined className="text-lg cursor-pointer" />
-      </Dropdown>
-    ),
-  },
-];
+            </Menu.Item> */}
+            </Menu>
+          }
+          trigger={["click"]}
+        >
+          <MoreOutlined className="text-lg cursor-pointer" />
+        </Dropdown>
+      ),
+    },
+  ];
 
 
   const antIcon = (
@@ -205,17 +240,17 @@ const columns = [
         <div className="overflow-x-auto">
           <Table
             columns={columns}
-            dataSource={yatch?.data || []}
+            dataSource={InvoiceData?.data || []}
             pagination={{
-    current: yatch?.data?.page || page,
-    pageSize: pageSize,
-    total: yatch?.data?.total || 0,
-    showSizeChanger: true,
-    onChange: (p, ps) => {
-      setPage(p);
-      setPageSize(ps);
-    },
-  }}
+              current: InvoiceData?.data?.page || page,
+              pageSize: pageSize,
+              total: InvoiceData?.data?.total || 0,
+              showSizeChanger: true,
+              onChange: (p, ps) => {
+                setPage(p);
+                setPageSize(ps);
+              },
+            }}
             rowKey="id"
             bordered={false}
             className="custom-table min-w-[800px]"

@@ -22,6 +22,10 @@ import IncentiveLevelTable from "@/components/modules/Incentive-level/Incentivel
 import UserTable from "@/components/modules/users/UserTable";
 
 import Facilities from "@/pages/facilities/facilities";
+import InvoiceTable from "@/components/modules/invoice/InvoiceTable";
+import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
+import Booking from "@/pages/booking/Booking";
+import Celender from "@/components/modules/celender/Celender";
 // import AddressAutocomplete from "@/pages/location";
 
 
@@ -33,7 +37,7 @@ const router = createBrowserRouter([
 },
 
   {
-    element: <ProtectedRoute roleAllowed={["Owner", "Salesman"]} />,
+    element: <ProtectedRoute roleAllowed={["Owner", "Sales Person"]} />,
     children: [
       {
         path: "/admin/login",
@@ -60,6 +64,7 @@ const router = createBrowserRouter([
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yatch", element: <Yatch /> },
           { path: "/facilities", element: <Facilities /> },
+          { path: "/bookings", element: <Booking /> },
           
 
         ],
@@ -67,23 +72,25 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Admin-only routes
+  
+  // Salesman routes
   {
-    element: <ProtectedRoute roleAllowed={["Salesman"]} />,
+    element: <ProtectedRoute roleAllowed={["Sales Person"]} />,
     children: [
       {
         element: <DashboardLayout />,
         children: [
-          { path: "/", element: <Navigate to="/dashboard" replace /> },
+          { path: "/", element: <DashboardPage /> },
           { path: "/dashboard", element: <DashboardPage /> },
+          { path: "/bookings", element: <Booking /> },
           { path: "/franchise-list", element: <FranchiseList /> },
           { path: "/lead-list", element: <LeadList /> },
         ],
       },
     ],
   },
-
-  // Salesman routes
+// Admin-only routes
+  
   {
     element: <ProtectedRoute roleAllowed={["Owner"]} />,
     children: [
@@ -94,9 +101,11 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
           { path: "/lead", element: <FranchiseLeadList /> },
           { path: "/yacht", element: <Yatch /> },
-
-
           { path: "/addons", element: <AddonsTable /> },
+          { path: "/bookings", element: <Booking /> },
+          { path: "/celender", element: <Celender /> },
+          { path: "/view-booking/:id", element: <DetailPageBooking /> },
+          { path: "/invoices/:id", element: <InvoiceTable /> },
           { path: "/blockedperiods", element: <BlockPeriodsTable /> },
           { path: "/incentivelevels", element: <IncentiveLevelTable /> },
           { path: "/users", element: <UserTable /> },
