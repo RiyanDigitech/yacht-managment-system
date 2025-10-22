@@ -23,8 +23,11 @@ const CreateFacilitiesModal: React.FC<CreateFacilitiesModalProps> = ({ open, onC
       form.resetFields();
       onClose();
     } catch (error: any) {
-      console.log(error.response?.data || error.message || error);
-      message.error("Failed to create New Facility!");
+      //console.log(error.response?.data || error.message || error);
+      //message.error("Failed to create New Facility!");
+      const msg = error?.response?.data?.message || "Failed to Create Facilities";
+          message.error(msg);
+      
     }
   };
 
@@ -44,7 +47,15 @@ const CreateFacilitiesModal: React.FC<CreateFacilitiesModalProps> = ({ open, onC
           name="name"
           rules={[{ required: true, message: "Write Facility Name here" }]}
         >
-          <Input placeholder="Enter Facility Name" />
+          <Input placeholder="Enter Facility Name" className="!border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+        onChange={(e) => {
+      const value = e.target.value;
+      const formatted = value.replace(/\b\w/g, (char) => char.toUpperCase());
+      form.setFieldsValue({ name: formatted });
+    }}
+      />
         </Form.Item>
 
         <Form.Item
@@ -52,7 +63,18 @@ const CreateFacilitiesModal: React.FC<CreateFacilitiesModalProps> = ({ open, onC
           name="description"
           rules={[{ required: true, message: "Write Description here" }]}
         >
-          <Input placeholder="Enter Description" />
+          <Input placeholder="Enter Description" className="!border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+       onChange={(e) => {
+      let value = e.target.value;
+      value = value.toLowerCase(); // sab lowercase
+      value = value.replace(/(^\w{1})|(\.\s*\w{1})/g, (match) =>
+        match.toUpperCase()
+      ); // sentence case
+      form.setFieldsValue({ description: value }); // form mein wapas set
+    }}
+      />
         </Form.Item>
 
           <Form.Item className="mb-0 flex justify-end">

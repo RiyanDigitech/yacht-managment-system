@@ -191,7 +191,10 @@ const CreateUserModal = ({ isOpen, onClose }: UserModalProps) => {
               <option value="">Select Role</option>
             
               <option value="Sales Person">Sales Person</option>
-              <option value="Customer">Customer</option>
+              
+              
+              
+              
             </select>
 
          

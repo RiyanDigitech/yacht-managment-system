@@ -1,19 +1,35 @@
 import { useState } from "react";
-import { Modal, Form, Input, InputNumber, Upload, Button, message } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  InputNumber,
+  Upload,
+  Button,
+  message,
+  Select,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
 import YatchService from "@/services/yatch-service/YatchService";
+import FacilitiesService from "@/services/facilities-service/facilities-service";
 
 interface CreateYachtModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-const CreateYachtModal: React.FC<CreateYachtModalProps> = ({ open, onClose }) => {
+const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
+  open,
+  onClose,
+}) => {
   const [form] = Form.useForm();
   const { useCreateYatch } = YatchService();
   const createYatch = useCreateYatch();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const { useGetFacilities } = FacilitiesService();
+  const { data: facilities, isLoading } = useGetFacilities();
 
   const handleSubmit = async (values: any) => {
     try {
@@ -24,6 +40,7 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({ open, onClose }) =>
       formData.append("washrooms", values.washrooms);
       formData.append("per_hour_rate", values.per_hour_rate);
       formData.append("currency", values.currency);
+      formData.append("facilities_ids", values.facilities);
 
       if (fileList && fileList.length > 0) {
         fileList.forEach((file: any) => {
@@ -37,8 +54,10 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({ open, onClose }) =>
       form.resetFields();
       onClose();
     } catch (error) {
-      console.error(error);
-      message.error("Failed to create yacht!");
+      const msg = error?.response?.data?.message || "Failed to create yacht";
+      message.error(msg);
+      // console.error(error);
+      // message.error("Failed to create yacht!");
     }
   };
 
@@ -66,51 +85,158 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({ open, onClose }) =>
           name="name"
           rules={[{ required: true, message: "Please enter yacht name" }]}
         >
-          <Input placeholder="Enter yacht name" />
+          <Input
+            placeholder="Enter yacht name"
+            className=" 
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+            onChange={(e) => {
+              const value = e.target.value;
+              const formatted = value.replace(/\b\w/g, (char) =>
+                char.toUpperCase()
+              );
+              form.setFieldsValue({ name: formatted });
+            }}
+          />
         </Form.Item>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Form.Item
-          label="Capacity"
-          name="capacity"
-          rules={[{ required: true, message: "Please enter capacity in number" }]}
-        >
-          <InputNumber placeholder="Enter capacity" className="w-full" />
-        </Form.Item>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Form.Item
+            label="Capacity"
+            name="capacity"
+            rules={[
+              { required: true, message: "Please enter capacity in number" },
+            ]}
+          >
+            <input
+              type="number"
+              placeholder="Enter capacity"
+              className="w-full border !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+            />
 
-        <Form.Item
-          label="Rooms"
-          name="rooms"
-          rules={[{ required: true, message: "Please enter number of rooms in number" }]}
-        >
-          <InputNumber placeholder="Enter rooms count" className="w-full" />
-        </Form.Item>
+            {/* <InputNumber placeholder="Enter capacity" className="w-full
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]" /> */}
+          </Form.Item>
 
-        <Form.Item
-          label="Washrooms"
-          name="washrooms"
-          rules={[{ required: true, message: "Please enter number of washrooms in number" }]}
-        >
-          <InputNumber placeholder="Enter washrooms count" className="w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Per Hour Rate"
-          name="per_hour_rate"
-          rules={[{ required: true, message: "Please enter number of per_hour_rate in number" }]}
-        >
-          <InputNumber placeholder="Enter per_hour_rate" className="w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Currency"
-          name="currency"
-          rules={[{ required: true, message: "Please enter currency" }]}
-        >
-          <Input placeholder="Enter currency" />
-        </Form.Item>
-</div>
+          <Form.Item
+            label="Rooms"
+            name="rooms"
+            rules={[
+              {
+                required: true,
+                message: "Please enter number of rooms in number",
+              },
+            ]}
+          >
+            <input
+              type="number"
+              placeholder="Enter rooms count"
+              className="w-full border !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+            />
+            {/* <InputNumber placeholder="Enter rooms count" className="w-full
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]" /> */}
+          </Form.Item>
+
+          <Form.Item
+            label="Washrooms"
+            name="washrooms"
+            rules={[
+              {
+                required: true,
+                message: "Please enter number of washrooms in number",
+              },
+            ]}
+          >
+            <input
+              type="number"
+              placeholder="Enter washrooms count"
+              className="w-full border !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+            />
+            {/* <InputNumber
+              placeholder="Enter washrooms count"
+              className="w-full 
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+            /> */}
+          </Form.Item>
+          <Form.Item
+            label="Per Hour Rate"
+            name="per_hour_rate"
+            rules={[
+              {
+                required: true,
+                message: "Please enter number of per_hour_rate in number",
+              },
+            ]}
+          >
+            <input
+              type="number"
+              placeholder="Enter per_hour_rate"
+              className="w-full border !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+            />
+            {/* <InputNumber
+              placeholder="Enter per_hour_rate"
+              className="w-full 
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+            /> */}
+          </Form.Item>
+          <Form.Item
+            label="Currency"
+            name="currency"
+            rules={[{ required: true, message: "Please enter currency" }]}
+          >
+            <Input
+              placeholder="Enter currency"
+              className=" 
+      !border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Facilities"
+            name="facilities"
+            //rules={[{ required: true, message: "Please select facilities" }]}
+          >
+            <Select
+              mode="multiple"
+              placeholder="Select facilities"
+              allowClear
+              loading={isLoading}
+              className="[&_.ant-select-selector]:!text-graysecondary [&_.ant-select-selector]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:hover]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:focus]:!border-[#D1D5DB]"
+            >
+              {facilities?.data?.map((facility: any) => (
+                <Select.Option key={facility.id} value={facility.id}>
+                  {facility.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </div>
         <Form.Item
           label="Images"
           name="images"
-          rules={[{ required: true, message: "Please upload at least one image" }]}
+          rules={[
+            { required: true, message: "Please upload at least one image" },
+          ]}
         >
           <Upload
             listType="picture-card"

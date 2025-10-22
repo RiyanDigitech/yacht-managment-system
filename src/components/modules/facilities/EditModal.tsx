@@ -27,8 +27,10 @@ const EditFacilitiesModal = ({ open, onCancel, data }: any) => {
           onCancel();
         },
         onError: (error: any) => {
-          console.error(error);
-          message.error("Failed to update Facility!");
+          //console.error(error);
+          //message.error("Failed to update Facility!");
+          const msg = error?.response?.data?.message || "Failed to update Facility";
+                    message.error(msg);
         }
       }
     );
@@ -68,14 +70,34 @@ const EditFacilitiesModal = ({ open, onCancel, data }: any) => {
           name="name"
           rules={[{ required: true, message: "Please enter updated Name" }]}
         >
-          <Input placeholder="Enter Name" />
+          <Input placeholder="Enter Name" className="!border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]" 
+        onChange={(e) => {
+      const value = e.target.value;
+      const formatted = value.replace(/\b\w/g, (char) => char.toUpperCase());
+      form.setFieldsValue({ name: formatted });
+    }}
+      
+      />
           </Form.Item>
         <Form.Item
           label="Description"
           name="description"
           rules={[{ required: true, message: "Please enter description" }]}
         >
-          <Input placeholder="Enter Description" />
+          <Input placeholder="Enter Description" className="!border-[#D1D5DB] 
+      hover:!border-[#D1D5DB] 
+      focus:!border-[#D1D5DB]" 
+       onChange={(e) => {
+      let value = e.target.value;
+      value = value.toLowerCase(); // sab lowercase
+      value = value.replace(/(^\w{1})|(\.\s*\w{1})/g, (match) =>
+        match.toUpperCase()
+      ); // sentence case
+      form.setFieldsValue({ description: value }); // form mein wapas set
+    }}
+      />
         </Form.Item>
 
 

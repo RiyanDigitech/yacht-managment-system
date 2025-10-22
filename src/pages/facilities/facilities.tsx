@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "antd"; // assuming you’re using Ant Design
  // adjust path
-import CreateFacilitiesModal from "@/components/modules/facilities/CraeateFacilitiesModal";
+import CreateFacilitiesModal from "@/components/modules/facilities/CreateFacilitiesModal";
 import FacilitiesTable from "@/components/modules/facilities/FacilitiesTable";
 // adjust path
 

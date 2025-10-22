@@ -24,9 +24,14 @@ const CreateBlockedPeriod = ({ isOpen, onClose }: BlockedPeriodProps) => {
 
   //console.log("yatch-id",yatch)
   
-  const formatDateTime = (value: string) => {
-  return value.replace("T", " ") + ":00";
+//   const formatDateTime = (value: string) => {
+//   return value.replace("T", " ") + ":00";
+// };
+const formatDateTimeToUTC = (value: string) => {
+  const date = new Date(value);
+  return date.toISOString().slice(0, 19).replace("T", " "); 
 };
+
 
 
  
@@ -42,9 +47,8 @@ const CreateBlockedPeriod = ({ isOpen, onClose }: BlockedPeriodProps) => {
 
   const handleSave = () => {
     const formData = new FormData();
-    formData.append("start_time", formatDateTime(start_time));
-    formData.append("end_time", formatDateTime(end_time));
-
+    formData.append("start_time", formatDateTimeToUTC(start_time));
+    formData.append("end_time", formatDateTimeToUTC(end_time));
     formData.append("reason", reason);
     formData.append("yacht_id", String(yacht_id));
     
@@ -139,7 +143,7 @@ const CreateBlockedPeriod = ({ isOpen, onClose }: BlockedPeriodProps) => {
               type="datetime-local"
               value={start_time}
               onChange={(e) => setStartTime(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
             </div>
           
@@ -149,7 +153,7 @@ const CreateBlockedPeriod = ({ isOpen, onClose }: BlockedPeriodProps) => {
               type="datetime-local"
               value={end_time}
               onChange={(e) => setEndTime(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
 

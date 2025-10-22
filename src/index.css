@@ -177,3 +177,9 @@ ul.ant-menu-vertical > li.ant-menu-item-only-child {
   background-color: #15803d !important; /* Darker green on hover */
   border-color: #15803d !important;
 }
+
+input:-webkit-autofill {
+  background-color: #fafafa !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
+  color: #000 !important;
+}
