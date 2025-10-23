@@ -7,34 +7,40 @@ import UserService from "@/services/user-service/UserService";
 interface AssignIncentiveProps {
   isOpen: boolean;
   onClose: () => void;
-   selectedUserId: number | null ;
+  selectedUserId: number | null;
+  selectedIncentiveLevelId: number | null;
 }
 
-const AssignIncentiveModal = ({ isOpen, onClose }: AssignIncentiveProps) => {
+const AssignIncentiveModal = ({ isOpen, onClose, selectedIncentiveLevelId }: AssignIncentiveProps) => {
   const { handleSubmit } = useForm();
 
   const { useGetUsers } = UserService();
-  const { data: users, isLoading } = useGetUsers();
+  const { data: users, isLoading: isUsersLoading } = useGetUsers();
+
+  const { useGetIncentive } = IncentiveService();
+  const { data: incentives, isLoading: isIncentivesLoading } = useGetIncentive(1, 100); // Fetch all incentives
 
   const { useAssignIncentive } = IncentiveService();
   const mutation = useAssignIncentive();
 
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [selectedIncentive, setSelectedIncentive] = useState<number | null>(selectedIncentiveLevelId); // Initialize with passed ID
 
   const handleSave = () => {
     if (!selectedUser) {
       message.error("Please select a user");
       return;
     }
-
-    const userId = selectedUser.id;
-    const incentiveLevelId = selectedUser.incentive_level_id;
+    if (!selectedIncentive) {
+      message.error("Please select an incentive level");
+      return;
+    }
 
     mutation.mutate(
       {
-        id: userId, 
+        id: selectedUser.id,
         data: {
-          incentive_level_id: incentiveLevelId,
+          incentive_level_id: selectedIncentive,
         },
       },
       {
@@ -42,6 +48,7 @@ const AssignIncentiveModal = ({ isOpen, onClose }: AssignIncentiveProps) => {
           message.success(res?.message || "Incentive Assigned Successfully");
           onClose();
           setSelectedUser(null);
+          setSelectedIncentive(null);
         },
         onError: (err: any) => {
           const msg = err?.response?.data?.message || "Failed to assign incentive";
@@ -59,7 +66,7 @@ const AssignIncentiveModal = ({ isOpen, onClose }: AssignIncentiveProps) => {
       footer={[
         <Button
           key="save"
-          className="bg-[#00a1b3] text-white"
+          className="bg-[#00a1b3] hover:!bg-[#00a1b3] text-white"
           onClick={handleSave}
         >
           {mutation.isPending ? "Assigning..." : "Assign"}
@@ -74,8 +81,10 @@ const AssignIncentiveModal = ({ isOpen, onClose }: AssignIncentiveProps) => {
           </label>
           <Select
             placeholder="Select User"
-            className="w-full"
-            loading={isLoading}
+            className="w-full [&_.ant-select-selector]:!text-graysecondary [&_.ant-select-selector]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:hover]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:focus]:!border-[#D1D5DB]"
+            loading={isUsersLoading}
             value={selectedUser?.id}
             onChange={(userId) => {
               const foundUser = users?.data?.find((u: any) => u.id === userId);
@@ -87,10 +96,27 @@ const AssignIncentiveModal = ({ isOpen, onClose }: AssignIncentiveProps) => {
             }))}
           />
         </div>
+        <div className="mt-6">
+          <label className="block text-sm font-semibold mb-1">
+            Select Incentive Level
+          </label>
+          <Select
+            placeholder="Select Incentive Level"
+            className="w-full [&_.ant-select-selector]:!text-graysecondary [&_.ant-select-selector]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:hover]:!border-[#D1D5DB] 
+             [&_.ant-select-selector:focus]:!border-[#D1D5DB]"
+            loading={isIncentivesLoading}
+            value={selectedIncentive}
+            onChange={(incentiveId) => setSelectedIncentive(incentiveId)}
+            options={incentives?.data?.map((incentive: any) => ({
+              value: incentive.id,
+              label: incentive.name,
+            }))}
+          />
+        </div>
       </form>
     </Modal>
   );
 };
 
 export default AssignIncentiveModal;
-
