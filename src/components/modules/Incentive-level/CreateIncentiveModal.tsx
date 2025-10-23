@@ -73,13 +73,7 @@ const CreateIncentiveModal = ({ isOpen, onClose }: IncentiveModalProps) => {
       open={isOpen}
       onCancel={onClose}
       footer={[
-        // <Button
-        //   key="cancel"
-        //   className="bg-red-500 text-backgroundPrimary hover:!bg-red-500 text-white"
-        //   onClick={onClose}
-        // >
-        //   Cancel
-        // </Button>,
+       
         <Button
           key="save"
           className="bg-[#00a1b3] text-backgroundPrimary hover:!bg-[#00a1b3] text-white"

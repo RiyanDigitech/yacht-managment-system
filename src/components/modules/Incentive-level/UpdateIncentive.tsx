@@ -69,13 +69,7 @@ const UpdateIncentiveModal = ({
       open={open}
       onCancel={onClose}
       footer={[
-        // <Button
-        //   key="cancel"
-        //   className="bg-red-500 text-backgroundPrimary hover:!bg-red-700"
-        //   onClick={onClose}
-        // >
-        //   Cancel
-        // </Button>,
+        
         <Button
           key="save"
           className="bg-[#00a1b3] text-white text-backgroundPrimary hover:!bg-[#00a1b3] transition disabled:opacity-50"

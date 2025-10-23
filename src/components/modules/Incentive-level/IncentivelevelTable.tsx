@@ -18,9 +18,12 @@ function IncentiveLevelTable() {
   const [editingIncentiveData, setEditingIncentiveData] = useState<
     string | null
   >(null);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+    const [selectedIncentiveLevelId, setSelectedIncentiveLevelId] = useState<
+    number | null
+  >(null); 
 
 
   const { useGetIncentive, useDeleteIncentive } = IncentiveService();
@@ -73,11 +76,7 @@ function IncentiveLevelTable() {
       render: (value: any) => value || <span className="">—</span>,
     },
 
-    // {
-    //   title: "is_active",
-    //   dataIndex: "is_active",
-    //   key: "is_active",
-    // },
+
 
     {
       title: "Created At",
@@ -94,20 +93,6 @@ function IncentiveLevelTable() {
         }),
     },
 
-    // {
-    //   title: "Updated At",
-    //   dataIndex: "updated_at",
-    //   key: "updated_at",
-    //   render: (text:string) =>
-    //     new Date(text).toLocaleString("en-GB", {
-    //       day: "2-digit",
-    //       month: "short",
-    //       year: "numeric",
-    //       hour: "2-digit",
-    //       minute: "2-digit",
-    //       hour12: true,
-    //     }),
-    // },
 
     {
       title: "Actions",
@@ -134,7 +119,8 @@ function IncentiveLevelTable() {
                 onClick={() => {
                   setEditingIncentiveData(record);
                   setIncentiveOpen(true);
-                   setSelectedUserId(record.id);
+
+                   setSelectedIncentiveLevelId(record.id);
                 }}
               >
                 Assign Incentive
@@ -221,9 +207,10 @@ function IncentiveLevelTable() {
       <AssignIncentiveModal
         isOpen={openincentive}
         onClose={() => setIncentiveOpen(false)}
-          selectedUserId={selectedUserId}
- 
+        selectedUserId={null} 
+        selectedIncentiveLevelId={selectedIncentiveLevelId} 
       />
+    
       <UpdateIncentiveModal
         open={editingIncentive}
         userData={editingIncentiveData}
