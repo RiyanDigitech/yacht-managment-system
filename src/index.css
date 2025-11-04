@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -182,4 +187,62 @@ input:-webkit-autofill {
   background-color: #fafafa !important;
   -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
   color: #000 !important;
+}
+
+.fonts-Cormorant{
+  font-family: 'Cormorant Upright', serif;
+   
+}
+
+.fonts-Roboto{
+  font-family: 'Roboto', serif;
+  
+}
+
+.fonts-Inconsolata{
+  font-family: 'Inconsolata', serif;
+ 
+}
+
+.ant-select-selector {
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+.ant-picker {
+
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.ant-form-item-label > label {
+  letter-spacing: 0.05em; 
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #000000; 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  cursor: pointer;
+}
+
+.ant-form-item-label {
+  padding-bottom: 0 !important;
+}
+
+
+input:-webkit-autofill {
+  background-color: #fafafa !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
+  color: #000 !important;
+}
+
+.img-width{
+width: 1753px;
+height: auto;
+}
+.margin{
+    margin-top: -120px;
 }

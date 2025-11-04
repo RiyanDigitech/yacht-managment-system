@@ -31,48 +31,48 @@ const DashboardLayout = () => {
     token: { colorPrimary },
   } = theme.useToken();
 
-  useEffect(() => {
-    const token = tokenService?.getLocalAccessToken();
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const currentTime = dayjs()?.unix();
-        console.log(decodedToken?.exp, "current time", currentTime);
-        if (decodedToken?.exp && decodedToken?.exp < currentTime) {
-          tokenService?.clearStorage();
-          navigate("/login");
-        }
-      } catch (error) {
-        navigate("/admin/login");
-      }
-    } else {
-      navigate("/admin/login");
-    }
-    const pathSegments = pathname.split("/").filter(Boolean);
-    if (pathSegments.length > 0) {
-      const cleanedSegment = pathSegments
-        .filter((segment) => !/^\d+$/.test(segment)) // Ignore segments that are only numbers
-        .join(" "); // Join remaining segments with a space
+  // useEffect(() => {
+  //   const token = tokenService?.getLocalAccessToken();
+  //   if (token) {
+  //     try {
+  //       const decodedToken = jwtDecode(token);
+  //       const currentTime = dayjs()?.unix();
+  //       console.log(decodedToken?.exp, "current time", currentTime);
+  //       if (decodedToken?.exp && decodedToken?.exp < currentTime) {
+  //         tokenService?.clearStorage();
+  //         navigate("/login");
+  //       }
+  //     } catch (error) {
+  //       navigate("/");
+  //     }
+  //   } else {
+  //     navigate("/");
+  //   }
+  //   const pathSegments = pathname.split("/").filter(Boolean);
+  //   if (pathSegments.length > 0) {
+  //     const cleanedSegment = pathSegments
+  //       .filter((segment) => !/^\d+$/.test(segment)) // Ignore segments that are only numbers
+  //       .join(" "); // Join remaining segments with a space
 
-      // Replace dashes with spaces and capitalize words
-      const readableTitle = cleanedSegment
-        .replace(/-/g, " ") // Replace dashes with spaces
-        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize words
-      setCurrentPage(readableTitle);
-    }
-    const handleResize = () => {
-      if (window.outerWidth < 768) {
-        setSee(false);
-      } else {
-        setSee(true);
-      }
-    };
+  //     // Replace dashes with spaces and capitalize words
+  //     const readableTitle = cleanedSegment
+  //       .replace(/-/g, " ") // Replace dashes with spaces
+  //       .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize words
+  //     setCurrentPage(readableTitle);
+  //   }
+  //   const handleResize = () => {
+  //     if (window.outerWidth < 768) {
+  //       setSee(false);
+  //     } else {
+  //       setSee(true);
+  //     }
+  //   };
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, [pathname]);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [pathname]);
   const getSiderWidth = () => {
     if (!see && collapsed) return 0;
     if (see && collapsed) return 70;

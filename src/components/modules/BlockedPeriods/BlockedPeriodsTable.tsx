@@ -160,7 +160,7 @@ const columns = [
               onClick={() => {
                 Modal.confirm({
                   title: "Confirm Deletion",
-                  content: `Are you sure you want to delete this BlockedPeriod?`,
+                  content: `Are you sure you want to delete this Maintenance?`,
                   okText: "Yes",
                   cancelText: "No",
                   okButtonProps: {
@@ -200,7 +200,7 @@ const columns = [
            <button className="bg-[#00a1b3] text-white py-2 px-3 rounded-lg" 
            onClick={() => setOpen(true)} 
            >
-                Create BlockedPeriods</button>
+                Create Maintenance</button>
         
       </div>
       <Spin
