@@ -69,7 +69,7 @@ const formatDateTimeToUTC = (value: string) => {
       { data: formData },
       {
         onSuccess: (res:any) => {
-          message.success(res?.message || "Blocked Period Created Successfully");
+          message.success(res?.message || "Maintenance Created Successfully");
           onClose();
           // Reset fields
           setStartTime("");
@@ -80,7 +80,7 @@ const formatDateTimeToUTC = (value: string) => {
         
         },
         onError: (err: any) => {
-          const msg = err?.response?.data?.message || "Failed to create Blocked Period";
+          const msg = err?.response?.data?.message || "Failed to create Maintenance";
           message.error(msg);
           
 
@@ -91,7 +91,7 @@ const formatDateTimeToUTC = (value: string) => {
 
   return (
     <Modal
-      title="Create Blocked Period"
+      title="Create Maintenance"
       open={isOpen}
       onCancel={onClose}
       footer={[

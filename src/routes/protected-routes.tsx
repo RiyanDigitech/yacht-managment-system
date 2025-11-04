@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roleAllowed }) => {
 
   // 1️⃣ If not logged in, redirect to login
   if (!accessToken && !isAuthRoute(pathname)) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // 2️⃣ If logged in but accessing login/forgot pages — redirect to dashboard

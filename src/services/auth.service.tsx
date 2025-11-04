@@ -317,7 +317,7 @@ const AuthService = () => {
       placement: "topRight",
     });
 
-    navigate("/admin/login");
+    navigate("/");
   };
 
   const onError = (error: errorType) => {

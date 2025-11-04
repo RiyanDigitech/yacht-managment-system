@@ -82,13 +82,13 @@ const UpdateBlockedPeriod = ({
       },
       {
         onSuccess: () => {
-          message.success("BlockedPeriod Updated Successfully");
+          message.success("Maintenance Updated Successfully");
           onClose();
         },
         onError: (error: any) => {
           // console.error("Update Error:", error);
           // message.error("Failed to update BlockedPeriod");
-          const msg = error?.response?.data?.message || "Failed to update BlockedPeriod";
+          const msg = error?.response?.data?.message || "Failed to update Maintenance";
           message.error(msg);
           
         },
@@ -98,7 +98,7 @@ const UpdateBlockedPeriod = ({
 
   return (
     <Modal
-      title="Update BlockedPeriod"
+      title="Update Maintenance"
       open={open}
       onCancel={onClose}
       footer={[

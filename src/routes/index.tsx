@@ -7,7 +7,7 @@ import ChangePassword from "@/pages/auth/change-password";
 import ResetNewPassword from "@/pages/auth/reset-new-password";
 import FranchiseList from "@/pages/franchise/franchise-list";
 import LeadList from "@/pages/lead-management/lead-management";
-import ProtectedRoute from "./protected-routes";
+//import ProtectedRoute from "./protected-routes";
 import ForGetPassword from "@/pages/auth/forget-password";
 import LoginPage from "@/pages/auth/login-page";
 import FranchiseLeadList from "@/pages/lead-management/targeted-franchise-lead-list";
@@ -26,6 +26,10 @@ import InvoiceTable from "@/components/modules/invoice/InvoiceTable";
 import DetailPageBooking from "@/components/modules/booking/DetailsPageBooking";
 import Booking from "@/pages/booking/Booking";
 import Celender from "@/components/modules/celender/Celender";
+import Home from "@/pages/home/home";
+import AboutPage from "@/pages/About/AboutPage";
+import NotFound from "@/components/NotFound";
+import ProtectedRoute from "./protected-routes";
 // import AddressAutocomplete from "@/pages/location";
 
 
@@ -35,13 +39,18 @@ const router = createBrowserRouter([
   element: <ResetNewPassword />,
   index: true,
 },
+  {
+  path: "/login",
+  element: <LoginPage />,
+  index: true,
+},
 
   {
-    element: <ProtectedRoute roleAllowed={["Owner", "Sales Person"]} />,
+    // element: <ProtectedRoute roleAllowed={["Owner", "Sales Person"]} />,
     children: [
       {
-        path: "/admin/login",
-        element: <LoginPage />,
+        path: "/",
+        element: <Home />,
         index: true,
       },
      
@@ -51,6 +60,7 @@ const router = createBrowserRouter([
         element: <ChangePassword />,
         index: true,
       },
+       { path: "*", element: <NotFound /> },
       {
         path: "/admin/forgot-password",
         element: <ForGetPassword />,
@@ -65,20 +75,18 @@ const router = createBrowserRouter([
           { path: "/yatch", element: <Yatch /> },
           { path: "/facilities", element: <Facilities /> },
           { path: "/bookings", element: <Booking /> },
-          
-
         ],
       },
     ],
   },
+  
 
   
   // Salesman routes
-  {
-    element: <ProtectedRoute roleAllowed={["Sales Person"]} />,
-    children: [
+  
+
       {
-        element: <DashboardLayout />,
+        element: <ProtectedRoute roleAllowed={["Sales Person"]} />,
         children: [
           { path: "/", element: <DashboardPage /> },
           { path: "/dashboard", element: <DashboardPage /> },
@@ -87,15 +95,11 @@ const router = createBrowserRouter([
           { path: "/lead-list", element: <LeadList /> },
         ],
       },
-    ],
-  },
+ 
 // Admin-only routes
   
-  {
-    element: <ProtectedRoute roleAllowed={["Owner"]} />,
-    children: [
       {
-        element: <DashboardLayout />,
+        element: <ProtectedRoute roleAllowed={["Owner"]} />,
         children: [
           { path: "/", element: <Navigate to="/dashboard" replace /> },
           { path: "/dashboard", element: <FranchiseDashboardPage /> },
@@ -112,15 +116,15 @@ const router = createBrowserRouter([
 
 
           { path: "/yatch/:id", element: <YachtDetail /> },
+           { path: "/", element: <Home /> },
+  
         ],
       },
-    ],
-  },
-  // Catch-all for 404 errors
-  {
-    path: "/admin/login",
-    element: <LoginPage />,
-  },
+    
+  
+  // Websites Routes
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <AboutPage /> },
 ]);
 
 export default router;
