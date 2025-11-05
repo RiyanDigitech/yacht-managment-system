@@ -209,7 +209,7 @@ const columns = [
         size="large"
         indicator={antIcon}
       >
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pt-7">
           <Table
             columns={columns}
             dataSource={blockperiod?.data || []}

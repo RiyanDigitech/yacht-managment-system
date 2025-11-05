@@ -40,7 +40,7 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
       formData.append("washrooms", values.washrooms);
       formData.append("per_hour_rate", values.per_hour_rate);
       formData.append("currency", values.currency);
-      formData.append("facilities_ids", values.facilities);
+      formData.append("facilities[]", values.facilities);
 
       if (fileList && fileList.length > 0) {
         fileList.forEach((file: any) => {
