@@ -3,80 +3,47 @@ import tokenService from "@/services/token.service";
 
 interface ProtectedRouteProps {
   roleAllowed: string[];
+  children?: React.ReactNode;
 }
 
-const AUTH_ROUTES = [
-  "/admin/login",
-  "/admin/forgot-password",
-  "/admin/reset-password",
-];
-
-const isAuthRoute = (path: string) =>
-  AUTH_ROUTES.some((route) => path.startsWith(route));
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roleAllowed }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  roleAllowed,
+  children,
+}) => {
   const accessToken = tokenService.getLocalAccessToken();
   const userRole = tokenService.getUserRoleFromCookie();
-  const { pathname } = useLocation();
+  const location = useLocation();
 
-  // 1️⃣ If not logged in, redirect to login
-  if (!accessToken && !isAuthRoute(pathname)) {
-    return <Navigate to="/" replace />;
+  // 🔒 Token missing → redirect to /login
+  if (!accessToken) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  // 2️⃣ If logged in but accessing login/forgot pages — redirect to dashboard
-  if (accessToken && isAuthRoute(pathname)) {
-    return <Navigate to="/" replace />;
+  // ❌ Role missing → redirect to login
+  if (!userRole) {
+    return <Navigate to="/login" replace />;
   }
 
-  // 3️⃣ If logged in but role not allowed
-  if (accessToken && userRole && !roleAllowed.includes(userRole)) {
-    return <Navigate to="/" replace />;
+  // ✅ Normalize roles for safe comparison
+  const normalizedUserRole = userRole.trim().toLowerCase();
+  const allowedRoles = roleAllowed.map((r) => r.trim().toLowerCase());
+
+  // ❌ If role not allowed → redirect based on actual role
+  if (!allowedRoles.includes(normalizedUserRole)) {
+    if (normalizedUserRole === "owner") {
+      return <Navigate to="/dashboard" replace />;
+    }
+    if (normalizedUserRole === "sales person") {
+      return <Navigate to="/dashboard" replace />;
+    }
+    if (normalizedUserRole === "customer") {
+      return <Navigate to="/bookings" replace />;
+    }
+    return <Navigate to="/login" replace />;
   }
 
-  // ✅ Otherwise render the route
-  return <Outlet />;
+  // ✅ Authorized → show layout
+  return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoute;
-
-// import { Navigate, Outlet, useLocation } from "react-router-dom";
-// import tokenService from "@/services/token.service";
-// interface ProtectedRouteProps {
-//   roleAllowed: string[]; // Array of allowed roles
-// }
-
-// const AUTH_ROUTES = [
-//   "/admin/login",
-//   "/admin/forgot-password",
-//   "/admin/reset-password/:token",
-// ];
-// const isRouteMatch = (pathname: string) => {
-//   return AUTH_ROUTES.some((route) => {
-//     if (route.includes(":")) {
-//       // Handle dynamic routes like "/admin/reset-password/:id"
-//       const baseRoute = route.split(":")[0]; // Extract base route "/admin/reset-password/"
-//       return pathname.startsWith(baseRoute);
-//     }
-//     return route === pathname; // Match static routes
-//   });
-// };
-// const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roleAllowed }) => {
-//   const userRole = tokenService?.getUserRoleFromCookie();
-//   const { pathname } = useLocation();
-//   const accessToken = tokenService.getLocalAccessToken();
-
-//   if (!accessToken && !isRouteMatch(pathname)) {
-//     return <Navigate to="/admin/login" />;
-//   }
-
-//   if (accessToken && isRouteMatch(pathname)) {
-//     return <Navigate to="/" />;
-//   }
-//   if (accessToken && (!userRole || !roleAllowed.includes(userRole))) {
-//     return <Navigate to="/" />;
-//   }
-//   return <Outlet />;
-// };
-
-// export default ProtectedRoute;
