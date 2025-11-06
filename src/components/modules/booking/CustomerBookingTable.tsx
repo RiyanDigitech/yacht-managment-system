@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BookingServices from "@/services/booking-service/BookingServices";
 import { parseISO, format } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCustomerBooking } from "@/services/BookingService/BookingService";
 
 
 
@@ -18,39 +20,40 @@ function CustomerBookingTable() {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
-    const { useGetBooking, useDeleteBooking } = BookingServices();
-    const { data: booking, isLoading } = useGetBooking(page, pageSize);
-    const deleteExpense = useDeleteBooking();
+    const { data: booking, isLoading } = useQuery({
+        queryKey:['book'],
+        queryFn:fetchCustomerBooking,
+    });
 
-    const handleDelete = (id: number, callbacks?: any) => {
-        if (!id) return;
+    // const handleDelete = (id: number, callbacks?: any) => {
+    //     if (!id) return;
 
-        deleteExpense.mutate(
-            { id },
-            {
-                onSuccess: (res) => {
-                    if (res?.success) {
-                        message.success(res.message || "Deleted successfully");
-                        callbacks?.onSuccess?.();
-                    } else {
-                        message.error(res?.message || "Failed to delete expense");
-                        callbacks?.onError?.();
-                    }
-                },
-                onError: (err: any) => {
-                    message.error(err?.response?.data?.message || "Delete request failed");
-                    callbacks?.onError?.();
-                },
-            }
-        );
-    };
+    //     deleteExpense.mutate(
+    //         { id },
+    //         {
+    //             onSuccess: (res) => {
+    //                 if (res?.success) {
+    //                     message.success(res.message || "Deleted successfully");
+    //                     callbacks?.onSuccess?.();
+    //                 } else {
+    //                     message.error(res?.message || "Failed to delete expense");
+    //                     callbacks?.onError?.();
+    //                 }
+    //             },
+    //             onError: (err: any) => {
+    //                 message.error(err?.response?.data?.message || "Delete request failed");
+    //                 callbacks?.onError?.();
+    //             },
+    //         }
+    //     );
+    // };
 
-    const handleClose = () => {
-        setOpen(false)
-    }
+    // const handleClose = () => {
+    //     setOpen(false)
+    // }
 
 
-    const naviagte = useNavigate()
+    // const naviagte = useNavigate()
     //   import { Dropdown, Menu, Modal } from "antd";
     // import { EditOutlined, DeleteOutlined, MoreOutlined } from "@ant-design/icons";
 
@@ -154,136 +157,136 @@ function CustomerBookingTable() {
             key: "total_price",
         },
       
-        {
-            title: "Actions",
-            key: "actions",
-            render: (_: any, record: any) => (
-                <Dropdown
-                    overlay={
-                        <Menu>
-                            {/* <Menu.Item
-                                key="Invoice"
-                                icon={<FaFileInvoice />}
-                                // danger
-                                onClick={() => {
-                                    naviagte(`/invoices/${record.id}`)
+//         {
+//             title: "Actions",
+//             key: "actions",
+//             render: (_: any, record: any) => (
+//                 <Dropdown
+//                     overlay={
+//                         <Menu>
+//                             {/* <Menu.Item
+//                                 key="Invoice"
+//                                 icon={<FaFileInvoice />}
+//                                 // danger
+//                                 onClick={() => {
+//                                     naviagte(`/invoices/${record.id}`)
 
-                                    // Modal.confirm({
-                                    //     title: "Confirm Deletion",
-                                    //     content: `Are you sure you want to delete "${record.name}"?`,
-                                    //     okText: "Yes",
-                                    //     cancelText: "No",
-                                    //     okButtonProps: {
-                                    //         className: "bg-green-600 text-white hover:!bg-green-700",
-                                    //     },
-                                    //     onOk: () =>
-                                    //         new Promise((resolve, reject) => {
-                                    //             handleDelete(record.id, {
-                                    //                 onSuccess: () => resolve(null),
-                                    //                 onError: (err: any) => reject(err),
-                                    //             });
-                                    //         }),
-                                    // });
-                                }}
-                            >
-                                View Invoice
-                            </Menu.Item> */}
-                            {/* <Menu.Item
-                                key="edit"
-                                icon={<EditOutlined />}
-                                onClick={() => {
-                                    setEditingExpense(record);
-                                    setOpen(true);
-                                }}
-                            >
-                                Edit
-                            </Menu.Item> */}
-{/* 
-                            <Menu.Item
-                                key="View"
-                                icon={<EyeFilled />}
-                                // danger
-                                onClick={() => {
-                                    naviagte(`/view-booking/${record.id}`)
+//                                     // Modal.confirm({
+//                                     //     title: "Confirm Deletion",
+//                                     //     content: `Are you sure you want to delete "${record.name}"?`,
+//                                     //     okText: "Yes",
+//                                     //     cancelText: "No",
+//                                     //     okButtonProps: {
+//                                     //         className: "bg-green-600 text-white hover:!bg-green-700",
+//                                     //     },
+//                                     //     onOk: () =>
+//                                     //         new Promise((resolve, reject) => {
+//                                     //             handleDelete(record.id, {
+//                                     //                 onSuccess: () => resolve(null),
+//                                     //                 onError: (err: any) => reject(err),
+//                                     //             });
+//                                     //         }),
+//                                     // });
+//                                 }}
+//                             >
+//                                 View Invoice
+//                             </Menu.Item> */}
+//                             {/* <Menu.Item
+//                                 key="edit"
+//                                 icon={<EditOutlined />}
+//                                 onClick={() => {
+//                                     setEditingExpense(record);
+//                                     setOpen(true);
+//                                 }}
+//                             >
+//                                 Edit
+//                             </Menu.Item> */}
+// {/* 
+//                             <Menu.Item
+//                                 key="View"
+//                                 icon={<EyeFilled />}
+//                                 // danger
+//                                 onClick={() => {
+//                                     naviagte(`/view-booking/${record.id}`)
 
-                                    // Modal.confirm({
-                                    //     title: "Confirm Deletion",
-                                    //     content: `Are you sure you want to delete "${record.name}"?`,
-                                    //     okText: "Yes",
-                                    //     cancelText: "No",
-                                    //     okButtonProps: {
-                                    //         className: "bg-green-600 text-white hover:!bg-green-700",
-                                    //     },
-                                    //     onOk: () =>
-                                    //         new Promise((resolve, reject) => {
-                                    //             handleDelete(record.id, {
-                                    //                 onSuccess: () => resolve(null),
-                                    //                 onError: (err: any) => reject(err),
-                                    //             });
-                                    //         }),
-                                    // });
-                                }}
-                            >
-                                View More
-                            </Menu.Item> */}
-                            {/* <Menu.Item
-                                key="Cancel Status"
-                                icon={<MdCancel />}
-                                danger
-                                onClick={() => {
-                                    Modal.confirm({
-                                        title: "Confirm Deletion",
-                                        content: `Are you sure you want to delete "${record.name}"?`,
-                                        okText: "Yes",
-                                        cancelText: "No",
-                                        okButtonProps: {
-                                            className: "bg-green-600 text-white hover:!bg-green-700",
-                                        },
-                                        onOk: () =>
-                                            new Promise((resolve, reject) => {
-                                                handleDelete(record.id, {
-                                                    onSuccess: () => resolve(null),
-                                                    onError: (err: any) => reject(err),
-                                                });
-                                            }),
-                                    });
-                                }}
-                            >
-                                Cancel
-                            </Menu.Item> */}
-                            <Menu.Item
-                                key="delete"
-                                icon={<DeleteOutlined />}
-                                danger
-                                onClick={() => {
-                                    Modal.confirm({
-                                        title: "Confirm Deletion",
-                                        content: `Are you sure you want to delete "${record.id}"?`,
-                                        okText: "Yes",
-                                        cancelText: "No",
-                                        okButtonProps: {
-                                            className: "bg-green-600 text-white hover:!bg-green-700",
-                                        },
-                                        onOk: () =>
-                                            new Promise((resolve, reject) => {
-                                                handleDelete(record.id, {
-                                                    onSuccess: () => resolve(null),
-                                                    onError: (err: any) => reject(err),
-                                                });
-                                            }),
-                                    });
-                                }}
-                            >
-                                Delete
-                            </Menu.Item>
-                        </Menu>
-                    }
-                    trigger={["click"]}
-                >
-                    <MoreOutlined className="text-lg cursor-pointer" />
-                </Dropdown>
-            ),
-        },
+//                                     // Modal.confirm({
+//                                     //     title: "Confirm Deletion",
+//                                     //     content: `Are you sure you want to delete "${record.name}"?`,
+//                                     //     okText: "Yes",
+//                                     //     cancelText: "No",
+//                                     //     okButtonProps: {
+//                                     //         className: "bg-green-600 text-white hover:!bg-green-700",
+//                                     //     },
+//                                     //     onOk: () =>
+//                                     //         new Promise((resolve, reject) => {
+//                                     //             handleDelete(record.id, {
+//                                     //                 onSuccess: () => resolve(null),
+//                                     //                 onError: (err: any) => reject(err),
+//                                     //             });
+//                                     //         }),
+//                                     // });
+//                                 }}
+//                             >
+//                                 View More
+//                             </Menu.Item> */}
+//                             {/* <Menu.Item
+//                                 key="Cancel Status"
+//                                 icon={<MdCancel />}
+//                                 danger
+//                                 onClick={() => {
+//                                     Modal.confirm({
+//                                         title: "Confirm Deletion",
+//                                         content: `Are you sure you want to delete "${record.name}"?`,
+//                                         okText: "Yes",
+//                                         cancelText: "No",
+//                                         okButtonProps: {
+//                                             className: "bg-green-600 text-white hover:!bg-green-700",
+//                                         },
+//                                         onOk: () =>
+//                                             new Promise((resolve, reject) => {
+//                                                 handleDelete(record.id, {
+//                                                     onSuccess: () => resolve(null),
+//                                                     onError: (err: any) => reject(err),
+//                                                 });
+//                                             }),
+//                                     });
+//                                 }}
+//                             >
+//                                 Cancel
+//                             </Menu.Item> */}
+//                             <Menu.Item
+//                                 key="delete"
+//                                 icon={<DeleteOutlined />}
+//                                 danger
+//                                 onClick={() => {
+//                                     Modal.confirm({
+//                                         title: "Confirm Deletion",
+//                                         content: `Are you sure you want to delete "${record.id}"?`,
+//                                         okText: "Yes",
+//                                         cancelText: "No",
+//                                         okButtonProps: {
+//                                             className: "bg-green-600 text-white hover:!bg-green-700",
+//                                         },
+//                                         onOk: () =>
+//                                             new Promise((resolve, reject) => {
+//                                                 handleDelete(record.id, {
+//                                                     onSuccess: () => resolve(null),
+//                                                     onError: (err: any) => reject(err),
+//                                                 });
+//                                             }),
+//                                     });
+//                                 }}
+//                             >
+//                                 Delete
+//                             </Menu.Item>
+//                         </Menu>
+//                     }
+//                     trigger={["click"]}
+//                 >
+//                     <MoreOutlined className="text-lg cursor-pointer" />
+//                 </Dropdown>
+//             ),
+//         },
     ];
 
 
