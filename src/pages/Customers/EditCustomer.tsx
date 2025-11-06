@@ -10,20 +10,25 @@ interface UpdateCustomerModalProps {
 
 const EditCustomer = ({ open, onClose, userData }: UpdateCustomerModalProps) => {
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const { useUpdateCustomer } = CustomerService();
   const { mutate: updateCustomer, isPending } = useUpdateCustomer();
 
   useEffect(() => {
     if (userData) {
+      setName(userData.name || "");
+      setEmail(userData.email || "");
       setPhone(userData.phone || "");
+      
     }
   }, [userData, open]);
 
-  const isDirty = phone !== (userData?.phone || "");
+  const isDirty = phone !== (userData?.phone || "") || name !== (userData?.name || "") || email !== (userData?.email || "");
 
   const handleSave = () => {
-    const data = { phone };
+    const data = {name,email,phone };
 
     updateCustomer(
       {
@@ -62,6 +67,26 @@ const EditCustomer = ({ open, onClose, userData }: UpdateCustomerModalProps) => 
       centered
     >
       <div className="space-y-4 mt-4">
+         <div>
+          <label className="block text-gray-600 mb-1">Name</label>
+          <Input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+
+            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
+          />
+        </div>
+         <div>
+          <label className="block text-gray-600 mb-1">Email</label>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            
+            className="flex-1 !border-[#D1D5DB] hover:!border-[#D1D5DB]"
+          />
+        </div>
         <div>
           <label className="block text-gray-600 mb-1">Phone</label>
           <Input
