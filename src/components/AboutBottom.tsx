@@ -1,5 +1,5 @@
 import handle1 from '../../public/handle-1.png';
-import steering1 from '../../public/handle-1.png';
+import steering1 from '../../public/steering1.png';
 import fan1 from '../../public/fan1.png';
 import boat1 from '../../public/boat1.png';
 

@@ -138,7 +138,7 @@ const UpdateUserModal = ({
               Phone
             </label>
             <input
-              type="text"
+              type="number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter Phone"
