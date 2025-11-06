@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { message } from "antd";
 import backGroundImage from "../../public/backGround.png";
 import BookingModal from "./BookingModal";
 import { getAllyacth, getAvailableYachts } from "@/services/BookingService/BookingService";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useNavigate } from "react-router-dom";
+import tokenService from "@/services/token.service";
 
 function CardSection() {
   const [visibleCount, setVisibleCount] = useState(6);
@@ -12,6 +14,22 @@ function CardSection() {
   const [endDate, setEndDate] = useState("");
   const [showAvailable, setShowAvailable] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLogin = () => {
+      const token = tokenService.getLocalAccessToken();
+      setIsLoggedIn(!!token);
+    };
+
+    checkLogin(); // check immediately
+
+    window.addEventListener("storage", checkLogin);
+    return () => window.removeEventListener("storage", checkLogin);
+  }, []);
+
+
+  const navigate = useNavigate();
 
   // Fetch all yachts
   const { data: allYachts } = useQuery({
@@ -42,6 +60,14 @@ function CardSection() {
       message.error(err?.response?.data?.message || "Failed to fetch available yachts!");
     }
   };
+
+  const handleBookNow = () => {
+  if (isLoggedIn) {
+    setIsOpen(true); // open modal if logged in
+  } else {
+    navigate("/login"); // redirect if not logged in
+  }
+};
 
   // Show either all or available yachts
   const yachts = showAvailable
@@ -223,7 +249,7 @@ function CardSection() {
               {/* Book Now Button */}
 
               <button 
-              onClick={() => setIsOpen(true)}
+              onClick={handleBookNow}
               className="bg-[#BFA888] text-white tracking-widest font-medium px-6 py-2 hover:bg-[#c3a36f] transition fonts-Inconsolata">
 
                 BOOK NOW
