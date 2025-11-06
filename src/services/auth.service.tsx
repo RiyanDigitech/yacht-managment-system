@@ -52,7 +52,7 @@ const AuthService = () => {
     navigate("/dashboard");
   } 
   else if (role === "Customer"){
-    navigate("/booking");
+    navigate("/");
   }
   else {
     navigate("/dashboard");
