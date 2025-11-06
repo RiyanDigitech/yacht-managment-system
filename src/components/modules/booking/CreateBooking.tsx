@@ -88,7 +88,7 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
           label="Select Yacht"
           rules={[{ required: true, message: "Please select a yacht" }]}
         >
-          <Select placeholder="Select Yacht">
+          <Select placeholder="Select Yacht" className="[&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]">
             {yachts?.map((item: any) => (
               <Select.Option key={item.id} value={item.id}>
                 {item.name}
@@ -103,7 +103,7 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
           label="Select Customer"
           rules={[{ required: true, message: "Please select a customer" }]}
         >
-          <Select placeholder="Select Customer">
+          <Select placeholder="Select Customer" className="[&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]">
             {customers?.map((item: any) => (
               <Select.Option key={item.id} value={item.id}>
                 {item.name}
@@ -118,6 +118,15 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
   label="Booking Duration"
   rules={[{ required: true, message: "Please select date & time" }]}
   preserve={true} 
+  className="w-full 
+      [&_.ant-picker]:!bg-white 
+      [&_.ant-picker]:!border 
+      [&_.ant-picker]:!border-gray-300 
+      [&_.ant-picker]:!rounded-md 
+      [&_.ant-picker]:!shadow-none 
+      [&_.ant-picker]:!focus:ring-0 
+      [&_.ant-picker]:!outline-none 
+      [&_.ant-picker:hover]:!border-gray-400"
 >
   <RangePicker
     showTime
@@ -137,7 +146,7 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
           label="Sales Type"
           rules={[{ required: true, message: "Please select sales type" }]}
         >
-          <Select placeholder="Select Sales Type">
+          <Select placeholder="Select Sales Type" className="[&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]">
             <Select.Option value="internal">Internal</Select.Option>
             <Select.Option value="external">External</Select.Option>
           </Select>
@@ -156,23 +165,13 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
                     className="flex-1"
                     rules={[{ required: true, message: "Select an addon" }]}
                   >
-                    <Select placeholder="Select Addon">
+                    <Select placeholder="Select Addon" className="[&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]">
                       {addons?.map((addon: any) => (
                         <Select.Option key={addon.id} value={addon.id}>
                           {addon.name}
                         </Select.Option>
                       ))}
                     </Select>
-                  </Form.Item>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, "quantity"]}
-                    label={name === 0 ? "Qty" : ""}
-                    className="w-28"
-                    rules={[{ required: true, message: "Enter quantity" }]}
-                  >
-                    <InputNumber min={1} placeholder="Qty" className="w-full" />
                   </Form.Item>
 
                   <Button
@@ -182,6 +181,16 @@ const CreateBookingModal: React.FC<CreateBookingModalProps> = ({ open, onClose }
                   >
                     Remove
                   </Button>
+
+                      {/* <Form.Item
+                    {...restField}
+                    name={[name, "quantity"]}
+                    label={name === 0 ? "Qty" : ""}
+                    className="w-28"
+                    rules={[{ required: true, message: "Enter quantity" }]}
+                  >
+                    <InputNumber min={1} placeholder="Qty" className="w-full" />
+                  </Form.Item> */}
                 </div>
               ))}
               <Button type="dashed" className="hover:!bg-gray-200 !text-black" onClick={() => add()} block>

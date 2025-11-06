@@ -201,11 +201,11 @@ const DetailPageBooking = () => {
               key: "is_active",
               render: (val) => (val ? "Yes" : "No"),
             },
-            {
-              title: "Quantity",
-              dataIndex: ["pivot", "quantity"],
-              key: "quantity",
-            },
+            // {
+            //   title: "Quantity",
+            //   dataIndex: ["pivot", "quantity"],
+            //   key: "quantity",
+            // },
             {
               title: "Price at Booking",
               dataIndex: ["pivot", "price_at_time_of_booking"],

@@ -47,7 +47,7 @@ const BookingModal = ({ openModal, onClose }:any) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["book"] });
       message.success(data.message || "Booking created successfully!");
-      onClose(); // close modal after success
+      onClose();
     },
     onError: (error:any) => {
       message.error(error?.response?.data?.message || "Failed to create booking");
