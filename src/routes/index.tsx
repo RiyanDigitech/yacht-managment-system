@@ -30,7 +30,9 @@ import Yatch from "@/pages/yatch/Yatch";
 import Home from "@/pages/home/home";
 import AboutPage from "@/pages/About/AboutPage";
 import NotFound from "@/components/NotFound";
+import CustomerPage from "@/pages/Customers/CustomerPage"
 import CustomerBooking from "@/pages/booking/CustomerBooking";
+
 
 const router = createBrowserRouter([
   // Public Pages
@@ -54,6 +56,7 @@ const router = createBrowserRouter([
       { path: "/lead", element: <FranchiseLeadList /> },
       { path: "/yacht", element: <Yatch /> },
       { path: "/addons", element: <AddonsTable /> },
+      { path: "/customers", element: <CustomerPage /> },
       { path: "/bookings", element: <Booking /> },
       { path: "/celender", element: <Celender /> },
       { path: "/view-booking/:id", element: <DetailPageBooking /> },

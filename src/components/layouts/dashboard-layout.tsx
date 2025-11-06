@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MdDashboard, MdGppGood } from "react-icons/md";
-import { MenuFoldOutlined, MenuUnfoldOutlined,UserOutlined } from "@ant-design/icons";
+import { CustomerServiceOutlined, MenuFoldOutlined, MenuUnfoldOutlined,UserOutlined } from "@ant-design/icons";
 import { MdReceipt } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
@@ -266,6 +266,17 @@ const DashboardLayout = () => {
             />
           ),
           label: <div className="text-textcolor">Bookings</div>,
+        },
+        {
+          key: "/customers",
+          icon: (
+            <CustomerServiceOutlined
+              className={`${
+                collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""
+              }`}
+            />
+          ),
+          label: <div className="text-textcolor">Customers</div>,
         },
         {
           key: "/incentivelevels",
