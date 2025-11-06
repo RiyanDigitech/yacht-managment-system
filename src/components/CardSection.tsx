@@ -4,6 +4,7 @@ import { message } from "antd";
 import backGroundImage from "../../public/backGround.png";
 import BookingModal from "./BookingModal";
 import { getAllyacth, getAvailableYachts } from "@/services/BookingService/BookingService";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 function CardSection() {
   const [visibleCount, setVisibleCount] = useState(6);
@@ -155,6 +156,7 @@ function CardSection() {
           >
             {/* Image */}
             <img
+              effect="blur"
               src={
                 yacht.image_paths && yacht.image_paths.length > 0
                   ? yacht.image_paths[0]

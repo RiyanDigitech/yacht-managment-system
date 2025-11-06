@@ -1,4 +1,5 @@
 import heroBg from "../../public/heroSection.png";
+
 import '../lib/css/Font.css'
 
 function HeroSection() {
