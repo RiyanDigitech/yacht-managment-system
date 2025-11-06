@@ -50,7 +50,11 @@ const AuthService = () => {
   // ✅ Role-based redirect
   if (role === "Owner") {
     navigate("/dashboard");
-  } else {
+  } 
+  else if (role === "Customer"){
+    navigate("/booking");
+  }
+  else {
     navigate("/dashboard");
   }
 

@@ -139,7 +139,71 @@ const DashboardLayout = () => {
               />
             </div>
           )}
-         {tokenService?.getUserRoleFromCookie() === "Owner" ? (
+          {tokenService?.getUserRoleFromCookie() === "Owner" && (
+  <>
+    {/* OWNER MENU */}
+    <Menu
+      className="mb-[80px] ant-dashboard-layout"
+      style={{ background: colorPrimary }}
+      mode={!see || (see && collapsed) ? "vertical" : "inline"}
+      selectedKeys={[pathname.startsWith("/dashboard") ? "/dashboard" : pathname]}
+      onClick={({ key }) => navigate(key)}
+      items={[
+        {
+          key: "/dashboard",
+          icon: <MdDashboard className={`${collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""}`} />,
+          label: <div className="text-textcolor">Dashboard</div>,
+        },
+        { key: "/yacht", icon: <GiShipBow />, label: <div className="text-textcolor">Yacht</div> },
+        { key: "/addons", icon: <FaStar />, label: <div className="text-textcolor">Addons</div> },
+        { key: "/blockedperiods", icon: <IoSettingsSharp />, label: <div className="text-textcolor">Maintenance</div> },
+        { key: "/bookings", icon: <MdReceipt />, label: <div className="text-textcolor">Bookings</div> },
+        { key: "/incentivelevels", icon: <GiLevelFour />, label: <div className="text-textcolor">Incentive Levels</div> },
+        { key: "/users", icon: <UserOutlined />, label: <div className="text-textcolor">Users</div> },
+        { key: "/facilities", icon: <MdGppGood />, label: <div className="text-textcolor">Facilities</div> },
+      ]}
+    />
+  </>
+)}
+
+{tokenService?.getUserRoleFromCookie() === "Sales Person" && (
+  <>
+    {/* SALES PERSON MENU */}
+    <Menu
+      className="mb-[80px] ant-dashboard-layout"
+      style={{ background: colorPrimary }}
+      mode={!see || (see && collapsed) ? "vertical" : "inline"}
+      selectedKeys={[pathname.startsWith("/dashboard") ? "/dashboard" : pathname]}
+      onClick={({ key }) => navigate(key)}
+      items={[
+        { key: "/dashboard", icon: <MdDashboard />, label: <div className="text-textcolor">Dashboard</div> },
+        { key: "/bookings", icon: <MdReceipt />, label: <div className="text-textcolor">Bookings</div> },
+      ]}
+    />
+  </>
+)}
+
+{tokenService?.getUserRoleFromCookie() === "Customer" && (
+  <>
+    {/* CUSTOMER MENU — Dashboard removed */}
+    <Menu
+      className="mb-[80px] ant-dashboard-layout"
+      style={{ background: colorPrimary }}
+      mode={!see || (see && collapsed) ? "vertical" : "inline"}
+      selectedKeys={[pathname]}
+      onClick={({ key }) => navigate(key)}
+      items={[
+        {
+          key: "/booking",
+          icon: <MdReceipt className={`${collapsed || !see ? "ml-1 h-[20px] w-[20px] mr-5" : ""}`} />,
+          label: <div className="text-textcolor">Bookings</div>,
+        },
+      ]}
+    />
+  </>
+)}
+
+         {/* {tokenService?.getUserRoleFromCookie() === "Owner" ? (
   <>
     <Menu
       className="mb-[80px] ant-dashboard-layout"
@@ -273,7 +337,7 @@ const DashboardLayout = () => {
       ]}
     />
   </>
-)}
+)} */}
 
         </Sider>
         {getSiderWidth() > 70 && currentPage === "Account Details" && (
