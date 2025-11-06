@@ -160,6 +160,7 @@ const DashboardLayout = () => {
         { key: "/bookings", icon: <MdReceipt />, label: <div className="text-textcolor">Bookings</div> },
         { key: "/incentivelevels", icon: <GiLevelFour />, label: <div className="text-textcolor">Incentive Levels</div> },
         { key: "/users", icon: <UserOutlined />, label: <div className="text-textcolor">Users</div> },
+        { key: "/customers", icon: <UserOutlined />, label: <div className="text-textcolor">Customers</div> },
         { key: "/facilities", icon: <MdGppGood />, label: <div className="text-textcolor">Facilities</div> },
       ]}
     />
@@ -178,6 +179,8 @@ const DashboardLayout = () => {
       items={[
         { key: "/dashboard", icon: <MdDashboard />, label: <div className="text-textcolor">Dashboard</div> },
         { key: "/bookings", icon: <MdReceipt />, label: <div className="text-textcolor">Bookings</div> },
+         { key: "/yacht", icon: <GiShipBow />, label: <div className="text-textcolor">Yacht</div> },
+         { key: "/customers", icon: <UserOutlined />, label: <div className="text-textcolor">Customers</div> },
       ]}
     />
   </>

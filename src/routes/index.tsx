@@ -81,6 +81,7 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <FranchiseDashboardPage /> },
       { path: "/yacht", element: <Yatch /> },
       { path: "/addons", element: <AddonsTable /> },
+      { path: "/customers", element: <CustomerPage /> },
       { path: "/bookings", element: <Booking /> },
     ],
   },
