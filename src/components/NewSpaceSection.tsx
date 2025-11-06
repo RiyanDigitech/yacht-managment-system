@@ -1,6 +1,8 @@
 import mapBg from "../../public/map.png";
 import place1 from "../../public/b1.png";
 import place2 from "../../public/b2.png";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 function NewSpaceSection() {
   return (
@@ -29,7 +31,8 @@ function NewSpaceSection() {
       {/* ===== Right: Map and Circles ===== */}
       <div className="relative w-full md:w-1/2 flex justify-center items-center">
         {/* Map */}
-        <img
+        <LazyLoadImage
+         effect="blur"
           src={mapBg}
           alt="map background"
           className="w-[85%] max-w-[550px] opacity-80 object-contain pointer-events-none"
@@ -38,7 +41,8 @@ function NewSpaceSection() {
         {/* Left Circular Image */}
         <div className="absolute bottom-[22%] left-[10%]">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-[#d4b37f] shadow-lg">
-            <img
+            <LazyLoadImage
+             effect="blur"
               src={place1}
               alt="place1"
               className="w-full h-full object-cover"

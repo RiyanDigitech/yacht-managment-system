@@ -10,6 +10,8 @@ import {
 import { getAllyacth,  createCustomerBooking,
   getAllAddons, } from "@/services/BookingService/BookingService";
   import boatImage from '/public/image-9.png'
+  import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const { Option } = Select;
 
@@ -251,7 +253,8 @@ const Booking = () => {
 
       {/* Right Image Section */}
       <div className="w-full lg:w-[50%] flex justify-end items-center p-0 m-0">
-        <img
+        <LazyLoadImage
+        effect="blur"
           src={boatImage}
           alt="Yacht"
           className="w-full h-auto object-contain"
