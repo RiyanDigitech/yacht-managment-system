@@ -26,7 +26,7 @@ const CustomerService = () => {
     return useQuery({
       queryKey: ["customer", id],
       queryFn: async () => {
-        const { data } = await axios.get(`/yachts/${id}`);
+        const { data } = await axios.get(`/manage-customers/${id}`);
         return data?.data;
       },
       enabled: !!id,
@@ -40,7 +40,7 @@ const useCreateCustomer = () => {
   return useMutation({
     mutationFn: async ({ data }: { data: FormData }) => {
       return axios
-        .post(`/yachts`, data)
+        .post(`/manage-customers`, data)
         .then((res) => res.data);
     },
     onSuccess: () => {
@@ -53,7 +53,7 @@ const useUpdateCustomer = () => {
   const queryClient = useQueryClient();
     return useMutation({
       mutationFn: async ({ id, data }: { id: number; data: FormData }) => {
-        const res = await axios.post(`/yachts/${id}?_method=PUT`, data);
+        const res = await axios.put(`/manage-customers/${id}`, data);
         return res.data;
       },
       onSuccess: () => {
@@ -72,7 +72,7 @@ const useUpdateCustomer = () => {
     }: {
       id: number | string;
     }) => {
-      const res = await axios.delete(`/yachts/${id}`);
+      const res = await axios.delete(`/manage-customers/${id}`);
       return res.data;
     },
     onSuccess: (_data) => {
