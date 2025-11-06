@@ -37,7 +37,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       return <Navigate to="/dashboard" replace />;
     }
     if (normalizedUserRole === "Customer") {
-      return <Navigate to="/bookings" replace />;
+      return <Navigate to="/" replace />;
     }
     return <Navigate to="/login" replace />;
   }
