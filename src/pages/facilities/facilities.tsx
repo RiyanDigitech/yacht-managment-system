@@ -17,14 +17,14 @@ const Facilities = () => {
         <div className="flex items-center gap-3 mb-4">
           <Button
             type="primary"
-            className="bg-[#00a1b3] hover:!bg-sky-600"
+            className="bg-[#00a1b3] hover:!bg-[#00a1b3]"
           >
             Filter
           </Button>
         </div>
  <div className="flex items-center gap-3 mb-4">
         <Button
-          className="bg-[#00a1b3] text-white hover:!bg-sky-600 p-4"
+          className="bg-[#00a1b3] text-white hover:!bg-[#00a1b3] p-4"
           onClick={() => setOpen(true)}
         >
           Create Facilities

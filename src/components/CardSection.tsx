@@ -172,8 +172,9 @@ function CardSection() {
                 {yacht.name}
               </h2>
               <p className="text-[#FFFFFF] text-[16px]  mb-3 ">
+                <span>PER HOUR RATE:  </span>
                 {yacht.per_hour_rate
-                  ? `$${yacht.per_hour_rate} ${yacht.currency}`
+                ? `$${yacht.per_hour_rate} ${yacht.currency}`
                   : "Contact for price"}
               </p>
 

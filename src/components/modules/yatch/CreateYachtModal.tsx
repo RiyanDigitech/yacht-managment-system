@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  Upload,
-  Button,
-  message,
-  Select,
-} from "antd";
+import { Modal, Form, Input, Upload, Button, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
 import YatchService from "@/services/yatch-service/YatchService";
@@ -33,6 +24,7 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
 
   const handleSubmit = async (values: any) => {
     try {
+      console.log("Form Submitted with values:", values);
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("capacity", values.capacity);
@@ -40,7 +32,15 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
       formData.append("washrooms", values.washrooms);
       formData.append("per_hour_rate", values.per_hour_rate);
       formData.append("currency", values.currency);
-      formData.append("facilities_ids", values.facilities);
+      // formData.append("facilities_ids[]", values.facilities_ids);
+      if (values.facilities && values.facilities.length > 0) {
+        values.facilities.forEach((id: any) => {
+          console.log(" Appending facility ID:", id);
+          formData.append("facility_ids[]", id);
+        });
+      } else {
+        console.log(" No facilities selected");
+      }
 
       if (fileList && fileList.length > 0) {
         fileList.forEach((file: any) => {
@@ -113,7 +113,8 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
               placeholder="Enter capacity"
               className="w-full border !border-[#D1D5DB] 
       hover:!border-[#D1D5DB] 
-      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+      focus:!border-[#D1D5DB] px-3 py-1 rounded focus:outline-none
+    focus:ring-0"
             />
 
             {/* <InputNumber placeholder="Enter capacity" className="w-full
@@ -137,7 +138,8 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
               placeholder="Enter rooms count"
               className="w-full border !border-[#D1D5DB] 
       hover:!border-[#D1D5DB] 
-      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+      focus:!border-[#D1D5DB] px-3 py-1 rounded focus:outline-none
+    focus:ring-0"
             />
             {/* <InputNumber placeholder="Enter rooms count" className="w-full
       !border-[#D1D5DB] 
@@ -160,7 +162,8 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
               placeholder="Enter washrooms count"
               className="w-full border !border-[#D1D5DB] 
       hover:!border-[#D1D5DB] 
-      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+      focus:!border-[#D1D5DB] px-3 py-1 rounded focus:outline-none
+    focus:ring-0"
             />
             {/* <InputNumber
               placeholder="Enter washrooms count"
@@ -185,7 +188,8 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
               placeholder="Enter per_hour_rate"
               className="w-full border !border-[#D1D5DB] 
       hover:!border-[#D1D5DB] 
-      focus:!border-[#D1D5DB] px-3 py-1 rounded"
+      focus:!border-[#D1D5DB] px-3 py-1 rounded focus:outline-none
+    focus:ring-0"
             />
             {/* <InputNumber
               placeholder="Enter per_hour_rate"
@@ -221,7 +225,7 @@ const CreateYachtModal: React.FC<CreateYachtModalProps> = ({
               loading={isLoading}
               className="[&_.ant-select-selector]:!text-graysecondary [&_.ant-select-selector]:!border-[#D1D5DB] 
              [&_.ant-select-selector:hover]:!border-[#D1D5DB] 
-             [&_.ant-select-selector:focus]:!border-[#D1D5DB]"
+             [&_.ant-select-selector:focus]:!border-[#D1D5DB] [&_.ant-select-selector]:!bg-white [&_.ant-select-selector]:!rounded-md [&_.ant-select-selector]:!text-graysecondary  [&_.ant-select-selector]:!px-3 [&_.ant-select-selector]:!py-1"
             >
               {facilities?.data?.map((facility: any) => (
                 <Select.Option key={facility.id} value={facility.id}>

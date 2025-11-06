@@ -202,7 +202,7 @@ console.log(events)
               setisOpen(true);
             }}
           >
-            ➕ Add Booking
+             Add Booking
           </Button>
 
           <Button
@@ -213,7 +213,7 @@ console.log(events)
               setOpen(true);
             }}
           >
-            🛠️ Add Maintenance
+             Add Maintenance
           </Button>
         </div>
       </Modal>

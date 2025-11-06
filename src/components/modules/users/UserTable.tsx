@@ -72,25 +72,33 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
-    render: (value: any) => value || <span className="">—</span>,
+    render: (value: string | number | null | undefined) => value || <span>—</span>,
+
+    //render: (value: any) => value || <span className="">—</span>,
   },
   {
     title: "MobileVerifiedAt",
     dataIndex: "mobile_verified_at",
     key: "mobile_verified_at",
-    render: (value: any) => value || <span className="">—</span>,
+    render: (value: string | number | null | undefined) => value || <span>—</span>,
+
+    //render: (value: any) => value || <span className="">—</span>,
   },
   {
     title: "IncentiveLevelId",
     dataIndex: "incentive_level_id",
     key: "incentive_level_id",
-    render: (value: any) => value || <span className="">—</span>,
+    render: (value: string | number | null | undefined) => value || <span>—</span>,
+
+    // render: (value: any) => value || <span className="">—</span>,
   },
   {
     title: "CeoSpecialApproval",
     dataIndex: "ceo_special_approval",
     key: "ceo_special_approval",
-    render: (value: any) => value || <span className="">—</span>,
+    render: (value: string | number | null | undefined) => value || <span>—</span>,
+
+    // render: (value: any) => value || <span className="">—</span>,
   },
 
   {
@@ -215,7 +223,7 @@ const columns = [
         size="large"
         indicator={antIcon}
       >
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pt-7">
           <Table
             columns={columns}
             dataSource={users?.data || []}
