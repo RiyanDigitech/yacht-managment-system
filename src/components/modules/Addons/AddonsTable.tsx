@@ -168,9 +168,9 @@ const columns = [
   );
 
   return (
-    <div className="p-4   rounded-[10px] ">
+    <div className="p-4  rounded-[10px] ">
       
-      <div className="flex justify-end ">
+      <div className="flex justify-end">
            <button className="bg-[#00a1b3] text-white py-2 px-3 rounded-lg" 
            onClick={() => setOpen(true)} 
            >
@@ -183,7 +183,7 @@ const columns = [
         size="large"
         indicator={antIcon}
       >
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pt-7">
           <Table
             columns={columns}
             dataSource={addons?.data || []}

@@ -12,9 +12,9 @@ import ChangePassword from "@/pages/auth/change-password";
 
 // Pages
 import FranchiseDashboardPage from "@/pages/dashboard/dashboard";
-import DashboardPage from "@/pages/dashboard";
-import FranchiseList from "@/pages/franchise/franchise-list";
-import LeadList from "@/pages/lead-management/lead-management";
+// import DashboardPage from "@/pages/dashboard";
+// import FranchiseList from "@/pages/franchise/franchise-list";
+// import LeadList from "@/pages/lead-management/lead-management";
 import FranchiseLeadList from "@/pages/lead-management/targeted-franchise-lead-list";
 import YachtDetail from "@/components/modules/yatch/YachtDetail";
 import BlockPeriodsTable from "@/components/modules/BlockedPeriods/BlockedPeriodsTable";
@@ -30,7 +30,9 @@ import Yatch from "@/pages/yatch/Yatch";
 import Home from "@/pages/home/home";
 import AboutPage from "@/pages/About/AboutPage";
 import NotFound from "@/components/NotFound";
-import CustomerPage from "@/pages/Customers/CustomerPage";
+import CustomerPage from "@/pages/Customers/CustomerPage"
+import CustomerBooking from "@/pages/booking/CustomerBooking";
+
 
 const router = createBrowserRouter([
   // Public Pages
@@ -91,8 +93,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-    //  { path: "/dashboard", element: <FranchiseDashboardPage /> },
-     { path: "/bookings", element: <Booking /> },
+     { path: "/booking", element: <CustomerBooking /> },
     ],
   },
 

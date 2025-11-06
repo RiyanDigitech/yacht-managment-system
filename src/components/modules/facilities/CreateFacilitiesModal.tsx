@@ -82,7 +82,7 @@ const CreateFacilitiesModal: React.FC<CreateFacilitiesModalProps> = ({ open, onC
             htmlType="submit"
             type="primary"
             loading={CreateFacilities.isPending}
-            className="bg-[#00a1b3] hover:!bg-sky-600"
+            className="bg-[#00a1b3] hover:!bg-[#00a1b3]"
           >
             Create
           </Button>

@@ -183,7 +183,7 @@ function IncentiveLevelTable() {
         size="large"
         indicator={antIcon}
       >
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pt-7">
           <Table
             columns={columns}
             dataSource={incentive?.data || []}

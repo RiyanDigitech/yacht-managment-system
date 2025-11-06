@@ -98,6 +98,7 @@ const BookingModal = ({ openModal, onClose }:any) => {
               size="large"
               value={formData.yacht_id || undefined}
               onChange={(value) => setFormData({ ...formData, yacht_id: value })}
+                className="[&_.ant-select-selector]:!bg-white [&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]"
             >
               {getyacth?.data?.map((y:any) => (
                 <Option key={y.id} value={y.id} label={y.name}>
@@ -133,7 +134,7 @@ const BookingModal = ({ openModal, onClose }:any) => {
             <Form.Item label="Start Time" required>
               <DatePicker
                 showTime
-                className="w-full"
+                className="w-full ant-picker !bg-white !border !border-gray-300 !rounded-md !shadow-none !focus:ring-0 !outline-none hover:!border-gray-400"
                 size="large"
                 onChange={(val) =>
                   setFormData({
@@ -148,7 +149,7 @@ const BookingModal = ({ openModal, onClose }:any) => {
             <Form.Item label="End Time" required>
               <DatePicker
                 showTime
-                className="w-full"
+                className="w-full ant-picker !bg-white !border !border-gray-300 !rounded-md !shadow-none !focus:ring-0 !outline-none hover:!border-gray-400"
                 size="large"
                 onChange={(val) =>
                   setFormData({
@@ -170,6 +171,7 @@ const BookingModal = ({ openModal, onClose }:any) => {
               size="large"
               value={formData.addons}
               onChange={(values) => setFormData({ ...formData, addons: values })}
+              className="[&_.ant-select-selector]:!bg-white [&_.ant-select-selector]:!border [&_.ant-select-selector]:!border-gray-300 [&_.ant-select-selector]:!shadow-none [&_.ant-select-selector]:!focus:ring-0 [&_.ant-select-selector]:!outline-none [&_.ant-select-selector:hover]:!border-gray-400]"
             >
               {getaddonOptions?.data?.map((addon:any) => (
                 <Option key={addon.id} value={addon.id}>
