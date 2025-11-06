@@ -30,13 +30,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // ❌ If role not allowed → redirect based on actual role
   if (!allowedRoles.includes(normalizedUserRole)) {
-    if (normalizedUserRole === "owner") {
+    if (normalizedUserRole === "Owner") {
       return <Navigate to="/dashboard" replace />;
     }
-    if (normalizedUserRole === "sales person") {
+    if (normalizedUserRole === "Sales Person") {
       return <Navigate to="/dashboard" replace />;
     }
-    if (normalizedUserRole === "customer") {
+    if (normalizedUserRole === "Customer") {
       return <Navigate to="/bookings" replace />;
     }
     return <Navigate to="/login" replace />;
