@@ -168,7 +168,7 @@ export default function LoginPage() {
               </div>
             </div>
             <p className="text-[12px] text-[#008444] font-DMSans">
-              <Link to={"/admin/forgot-password"}>Forgot Password?</Link>
+              <Link to={"/forgot-password"}>Forgot Password?</Link>
             </p>
           </div>
           <div className="my-5 md:w-[120px]">
