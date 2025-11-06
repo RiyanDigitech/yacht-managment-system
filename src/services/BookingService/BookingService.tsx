@@ -11,6 +11,16 @@ export const createCustomerBooking = async (data:any) => {
         console.log(error)
     }
 }
+export const fetchCustomerBooking = async () => {
+    try {
+        const response = await axios.get('/customer/bookings')
+        if (response.status === 200) {
+            return response.data
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 export const getAllyacth = async () => {
