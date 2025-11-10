@@ -55,19 +55,19 @@ function CardSection() {
     try {
       await fetchAvailableYachts();
       setShowAvailable(true);
-    } catch (err:any) {
+    } catch (err: any) {
       console.error(err);
       message.error(err?.response?.data?.message || "Failed to fetch available yachts!");
     }
   };
 
   const handleBookNow = () => {
-  if (isLoggedIn) {
-    setIsOpen(true); // open modal if logged in
-  } else {
-    navigate("/login"); // redirect if not logged in
-  }
-};
+    if (isLoggedIn) {
+      setIsOpen(true); // open modal if logged in
+    } else {
+      navigate("/login"); // redirect if not logged in
+    }
+  };
 
   // Show either all or available yachts
   const yachts = showAvailable
@@ -88,7 +88,7 @@ function CardSection() {
             CHECK - IN
           </label>
           <input
-            type="date"
+            type="datetime-local"
             className="bg-transparent border border-gray-500 text-white px-6 py-3 w-full h-12 focus:outline-none"
             style={{ height: "48px" }}
             value={startDate}
@@ -101,11 +101,12 @@ function CardSection() {
             CHECK - OUT
           </label>
           <input
-            type="date"
+            type="datetime-local"
             className="bg-transparent border border-gray-500 text-white px-6 py-3 w-full h-12 focus:outline-none"
             style={{ height: "48px" }}
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
+            step="900" // 900 seconds = 15 minutes
           />
         </div>
 
@@ -118,7 +119,7 @@ function CardSection() {
         </button>
       </div>
 
-        {/* <div className="flex flex-col md:flex-row gap-6 justify-center mb-14">
+      {/* <div className="flex flex-col md:flex-row gap-6 justify-center mb-14">
 
            <div className="flex flex-col w-full md:w-auto">
     <label 
@@ -175,7 +176,7 @@ function CardSection() {
 
       {/* Yacht Cards */}
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 justify-center">
-        {yachts.slice(0, visibleCount).map((yacht:any, index:any) => (
+        {yachts.slice(0, visibleCount).map((yacht: any, index: any) => (
           <div
             key={index}
             className="border-[3px] border-[#BFA888] backdrop-blur-sm overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
@@ -200,7 +201,7 @@ function CardSection() {
               <p className="text-[#FFFFFF] text-[16px]  mb-3 ">
                 <span>PER HOUR RATE:  </span>
                 {yacht.per_hour_rate
-                ? `$${yacht.per_hour_rate} ${yacht.currency}`
+                  ? `$${yacht.per_hour_rate} ${yacht.currency}`
                   : "Contact for price"}
               </p>
 
@@ -232,7 +233,7 @@ function CardSection() {
 
               {/* Facilities (small tags) */}
               <div className="flex flex-wrap justify-center gap-2 mb-5">
-                {yacht.facilities?.slice(0, 4)?.map((f:any, i:any) => (
+                {yacht.facilities?.slice(0, 4)?.map((f: any, i: any) => (
                   <span
                     key={i}
                     className="bg-[#BFA888]/20 text-[#BFA888] text-[10px] px-2 py-[2px] rounded-md"
@@ -249,9 +250,9 @@ function CardSection() {
 
               {/* Book Now Button */}
 
-              <button 
-              onClick={handleBookNow}
-              className="bg-[#BFA888] text-white tracking-widest font-medium px-6 py-2 hover:bg-[#c3a36f] transition fonts-Inconsolata">
+              <button
+                onClick={handleBookNow}
+                className="bg-[#BFA888] text-white tracking-widest font-medium px-6 py-2 hover:bg-[#c3a36f] transition fonts-Inconsolata">
 
                 BOOK NOW
               </button>

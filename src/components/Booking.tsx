@@ -168,39 +168,50 @@ const Booking = () => {
             </Form.Item>
 
             {/* Start & End Time */}
-            <div className="grid grid-cols-2 gap-4">
-              <Form.Item label="CHECK-IN" required labelCol={{ className: "fonts-Inconsolata" }}>
-                <DatePicker
-                  showTime
-                  className="w-full"
-                  size="large"
-                  onChange={(val) =>
-                    setFormData({
-                      ...formData,
-                      start_time: val ? val.toISOString() : "",
-                    })
-                  }
-                  value={
-                    formData.start_time ? dayjs(formData.start_time) : null
-                  }
-                />
-              </Form.Item>
+           <div className="grid grid-cols-2 gap-4">
+  {/* Start Time */}
+  <Form.Item label="Start Time" required>
+    <DatePicker
+      showTime={{
+        format: "HH:mm",      // Sirf Hour:Minute
+        minuteStep: 15,       // 15 minute step
+        hideDisabledOptions: true,
+      }}
+      className="w-full ant-picker !bg-white !border !border-gray-300 !rounded-md !shadow-none !focus:ring-0 !outline-none hover:!border-gray-400"
+      size="large"
+      onChange={(val) =>
+        setFormData({
+          ...formData,
+          start_time: val ? val.toISOString() : "",
+        })
+      }
+      value={formData.start_time ? dayjs(formData.start_time) : null}
+      format="YYYY-MM-DD HH:mm" // Date + Time display format
+    />
+  </Form.Item>
 
-              <Form.Item label="CHECK-OUT" required labelCol={{ className: "fonts-Inconsolata" }}>
-                <DatePicker
-                  showTime
-                  className="w-full"
-                  size="large"
-                  onChange={(val) =>
-                    setFormData({
-                      ...formData,
-                      end_time: val ? val.toISOString() : "",
-                    })
-                  }
-                  value={formData.end_time ? dayjs(formData.end_time) : null}
-                />
-              </Form.Item>
-            </div>
+  {/* End Time */}
+  <Form.Item label="End Time" required>
+    <DatePicker
+      showTime={{
+        format: "HH:mm",      // Sirf Hour:Minute
+        minuteStep: 15,       // 15 minute step
+        hideDisabledOptions: true,
+      }}
+      className="w-full ant-picker !bg-white !border !border-gray-300 !rounded-md !shadow-none !focus:ring-0 !outline-none hover:!border-gray-400"
+      size="large"
+      onChange={(val) =>
+        setFormData({
+          ...formData,
+          end_time: val ? val.toISOString() : "",
+        })
+      }
+      value={formData.end_time ? dayjs(formData.end_time) : null}
+      format="YYYY-MM-DD HH:mm" // Date + Time display format
+    />
+  </Form.Item>
+</div>
+
 
             {/* Addons Field */}
             <Form.Item label="ADDONS" labelCol={{ className: "fonts-Inconsolata" }}>
