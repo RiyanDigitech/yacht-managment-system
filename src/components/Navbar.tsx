@@ -18,6 +18,8 @@ function Navbar() {
     !!tokenService.getLocalAccessToken()
   );
 
+  console.log(isLoggedIn, "hhh")
+
   const navItems = [
     { name: "HOME", path: "/" },
     { name: "ABOUT", path: "/about" },
@@ -51,10 +53,21 @@ function Navbar() {
     retry: 0,
   });
 
+
+  const userData = localStorage.getItem('admin')
+  const data = JSON.parse(userData)
+
+
+
   // ✅ Handle login/dashboard button
   const handleButtonClick = () => {
     if (isLoggedIn) {
-      navigate("/dashboard");
+      if (data?.role === "Customer") {
+        navigate("/booking");
+      } else {
+        navigate("/dashboard");
+      }
+
     } else {
       navigate("/login");
     }
@@ -97,8 +110,8 @@ function Navbar() {
           {isPending
             ? "Please wait..."
             : isLoggedIn
-            ? "DASHBOARD"
-            : "LOGIN"}
+              ? "DASHBOARD"
+              : "LOGIN"}
         </button>
       </div>
 
@@ -133,8 +146,8 @@ function Navbar() {
             {isPending
               ? "Please wait..."
               : isLoggedIn
-              ? "DASHBOARD"
-              : "LOGIN"}
+                ? "DASHBOARD"
+                : "LOGIN"}
           </button>
         </div>
       )}
